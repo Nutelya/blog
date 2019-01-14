@@ -125,7 +125,16 @@ class UserManagerPDO {
 	 */
 
 	public final  function getUnique($id) {
+	 $request = $this->db->prepare('SELECT id, pseudo, password, email, date_register, role FROM utilisateur WHERE id = :id');
+ 	 $request->bindValue(':id', (int) $id, PDO::PARAM_INT);
+ 	 $request->execute();
+ 	 $request->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
 
+ 	 $user = $request->fetch();
+
+ 	 $user->setDate_register(new DateTime($user->date_register()));
+
+ 	 return $user;
 	}
 
 

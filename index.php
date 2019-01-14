@@ -2,7 +2,22 @@
 require 'model/autoload.php';
 session_start();
 $db = DBFactory::getMysqlConnexionWithPDO();
+$dbU = DBFactory::getMysqlConnexionWithPDOuser();
 $manager = new billetManagerPDO($db);
+$managerCom = new CommentaireManagerPDO($db);
+$managerUser = new UserManagerPDO($dbU);
+
+if (isset($_POST['comment']))
+{
+  $commentaire = new Commentaire(
+    [
+      'contenu' => htmlspecialchars($_POST['comment']),
+      'idAuteur' => $_SESSION['id'],
+      'idBillet' => $_GET['id']
+    ]
+  );
+    $managerCom->add($commentaire);
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -81,8 +96,25 @@ $manager = new billetManagerPDO($db);
 
                 if ($billet->dateAdd() != $billet->dateEdit())
               {
-                echo '<p>Modifiée le ', $billet->dateEdit()->format('d/m/Y à H\hi'), '</p>';
+                echo '<p>Modifié le ', $billet->dateEdit()->format('d/m/Y à H\hi'), '</p>';
               }
+              echo '<h2 class="blog-post-title">Commentaires</h2>', "\n";
+              foreach ($managerCom->getListCom(0, 10, $billet->id()) as $commentaire)
+              {
+                if (strlen($commentaire->contenu()) <= 200)
+                {
+                  $container = $commentaire->contenu();
+                }
+                $user = $managerUser->getUnique($commentaire->idAuteur());
+                echo '<p>',$user->pseudo(),' - ',$user->role(),' - ',$commentaire->dateAjout()->format('d/m/Y à H\hi'),'</p>',
+                     '<blockquote>',nl2br($container), '</blockquote>';
+              }
+              echo '<br>',
+                   '<form id="commentary" action="index.php?id=',$billet->id(),'" method="post">',
+                   '<h4>Publier un commentaire</h4>',
+                   '<textarea rows="8" cols="60" name="comment"></textarea>',
+                   '<input type="submit" value="Valider" />',
+                   '</form>';
             }
 
             else
