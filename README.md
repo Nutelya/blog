@@ -18,8 +18,8 @@ To do :
 
 - Commentaires :
   {--Créer le modèle--}
-  Créer la data base des commentaires
-  Créer le manager de commentaires
+  {--Créer la data base des commentaires--}
+  {--Créer le manager de commentaires--}
   CRUD des commentaires
   Utilisateur doit être connecté pour laisser un commentaire
   Utilisateur doit être connecté pour signaler un commentaire
