@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Administration</title>
-    <?php include("../template/cssLink.php"); ?>
-  </head>
-
-  <body id="page-top">
-    <?php include("../template/menuAdmin.php"); ?>
+<?php $title = 'Modifier un billet'; ?>
+<?php ob_start(); ?>
     <div id="content-wrapper">
       <div class="container-fluid">
         <!-- Breadcrumbs-->
@@ -33,6 +26,5 @@
         </form>
       </div>
     </div>
-    <?php include("../template/scriptLink.php"); ?>
-  </body>
-</html>
+<?php $content = ob_get_clean(); ?>
+<?php require('../template/templateAdmin.php'); ?>

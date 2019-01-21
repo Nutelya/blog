@@ -131,6 +131,24 @@ class BilletManagerPDO {
 	 return $billet;
 	}
 
+	/**
+	 * @access public
+	 * @param string $title
+	 * @return id
+	 */
+
+	public final  function getId($title) {
+	 $request = $this->db->prepare('SELECT id, title FROM billet WHERE title = :title');
+	 $request->bindValue(':title', $title);
+	 $request->execute();
+	 $request->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Billet');
+
+	 $billet = $request->fetch();
+	 $id = $billet->id();
+
+	 return $id;
+	}
+
 
 }
 ?>

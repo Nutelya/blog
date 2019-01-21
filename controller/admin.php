@@ -1,3 +1,3 @@
 <?php
-require('../view/backend/adminView.php')
+include('../view/backend/adminView.php');
  ?>

@@ -11,6 +11,7 @@ To do :
 
 - Utilisateur :
   Modifier le système de sessions avec les cookies
+  Marque page
   modifier un peu la data base avec des id aléatoires
   Créer une page de profil d'Utilisateur
   Donner la possibilité de modifier le mot de passe
@@ -35,6 +36,7 @@ To do :
   Ajouter une corbeille pour les articles et commentaires
   Pagination commentaires et billets et utilisateurs
   Donner la possibilité de modifier un commentaire
+  Quand on supprime un billet, delete commentaires et signalements etc
 
 - Connexion & Inscription :
   Améliorer l'interface : ajouter du javascript & php pour vérifier
@@ -49,3 +51,9 @@ To do :
 - Footer :
   Ajouter des mentions légales
   Un menu de toutes les pages du site
+
+
+ - Questions :
+ Id de session?
+ Id pour un utilisateur?
+ sécurité cookies
