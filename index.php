@@ -2,22 +2,35 @@
 require 'model/autoload.php';
 session_start();
 $db = DBFactory::getMysqlConnexionWithPDO();
-$dbU = DBFactory::getMysqlConnexionWithPDOuser();
 $manager = new billetManagerPDO($db);
 $managerCom = new CommentaireManagerPDO($db);
-$managerUser = new UserManagerPDO($dbU);
+$managerUser = new UserManagerPDO($db);
+$managerSignalement = new SignalementManagerPDO($db);
 
 if (isset($_POST['comment']))
 {
   $commentaire = new Commentaire(
     [
       'contenu' => htmlspecialchars($_POST['comment']),
-      'idAuteur' => $_SESSION['id'],
-      'idBillet' => $_GET['id']
+      'idAuteur' => htmlspecialchars($_SESSION['id']),
+      'idBillet' => htmlspecialchars($_GET['id'])
     ]
   );
     $managerCom->add($commentaire);
 }
+
+if (isset($_POST['idCommentaire']))
+{
+  $signalement = new Signalement(
+    [
+      'idCommentaire' => htmlspecialchars($_POST['idCommentaire']),
+      'idAuteur' => htmlspecialchars($_SESSION['id']),
+      'idBillet' => htmlspecialchars($_GET['id'])
+    ]
+  );
+    $managerSignalement->add($signalement);
+}
+
 
 
 include('../blog/view/frontend/indexView.php');

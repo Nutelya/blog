@@ -1,11 +1,7 @@
 <?php
 session_start();
-
-$_SESSION = array();
+session_unset ();
 session_destroy();
-
-setcookie('id', '');
-setcookie('pseudo', '');
-
+header ('location: ../index.php');
 require('../view/frontend/disconnectView.php');
  ?>

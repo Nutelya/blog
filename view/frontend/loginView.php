@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Login</title>
+    <title>Page de connexion</title>
 
     <!-- Bootstrap core CSS-->
     <link href="../bootstrapAdmin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -52,10 +52,10 @@
             <input type="submit" class="btn btn-primary btn-block"  value="Connexion" />
           </form>
           <div class="text-center">
-            <a class="d-block small mt-3" href="<?php echo htmlspecialchars($_SERVER['HTTP_REFERER']) ?>">Revenir à la dernière page</a>
-            <a class="d-block small mt-3" href="../index.php">Accueil</a>
-            <a class="d-block small mt-3" href="registration.php">S'inscrire</a>
             <a class="d-block small mt-3" href="forgot-password.html">Mot de passe oublié?</a>
+            <a class="d-block small mt-3" href="registration.php">S'inscrire</a>
+            <a class="d-block small mt-3" href="../index.php">Retourner à l'accueil</a>
+
           </div>
         </div>
       </div>

@@ -98,13 +98,30 @@
             <h6 class="dropdown-header">Gestion des billets:</h6>
             <a class="dropdown-item" href="billetAdd.php">Créer un billet</a>
             <a class="dropdown-item" href="billetList.php">Liste des billets</a>
-
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="billetList.php" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Commentaires</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            <h6 class="dropdown-header">Modération:</h6>
+            <a class="dropdown-item" href="commentaireList.php">Commentaires</a>
+            <a class="dropdown-item" href="signalementList.php">Signalements</a>
+          </div>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="userList.php">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Utilisateurs</span></a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="corbeille.php">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Corbeille</span></a>
+        </li>
+
         <li class="nav-item">
           <a class="nav-link" href="../index.php">
             <i class="fas fa-fw fa-table"></i>

@@ -36,7 +36,7 @@
         {
           $billet = $manager->getUnique((int) $_GET['id']);
 
-          echo '<div class="blog-post">',
+          echo '<div id="',$billet->id(),'" class="blog-post">',
                '<h2 class="blog-post-title">', $billet->title(), '</h2>', "\n",
                '<p class="blog-post-meta"> Le ', $billet->dateAdd()->format('d/m/Y à H\hi'), '</p>', "\n",
                '<p>', nl2br($billet->container()), '</p>', "\n",
@@ -49,13 +49,13 @@
           echo '<h2 class="blog-post-title">Commentaires</h2>', "\n";
           foreach ($managerCom->getListCom(0, 10, $billet->id()) as $commentaire)
           {
-            if (strlen($commentaire->contenu()) <= 200)
-            {
-              $container = $commentaire->contenu();
-            }
-            $userC = $managerUser->getUnique($commentaire->idAuteur());
-            echo '<p>',$userC->pseudo(),' - ',$userC->role(),' - ',$commentaire->dateAjout()->format('d/m/Y à H\hi'),'</p>',
-                 '<blockquote>',nl2br($container), '</blockquote>';
+            echo '<p id="com',$commentaire->id(),'">',$managerUser->getUnique($commentaire->idAuteur())->pseudo(),' - ',$managerUser->getUnique($commentaire->idAuteur())->role(),' - ',$commentaire->dateAjout()->format('d/m/Y à H\hi'),'</p>',
+                 '<blockquote>',nl2br($commentaire->contenu()), '</blockquote>',
+                 '<br>',
+                 '<form action="index.php?id=',$billet->id(),'" method="post">',
+                 '<input type="hidden" name="idCommentaire" value="',$commentaire->id(),'"/>',
+                 '<input type="submit" value="Signaler" />',
+                 '</form>';
           }
           if (isset($_SESSION['id']) AND isset($_SESSION['pseudo']))
           {

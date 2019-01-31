@@ -65,6 +65,7 @@ class CommentaireManagerPDO {
 
 	public final  function delete($id) {
 		$this->db->exec('DELETE FROM commentaire WHERE id = '.(int) $id);
+		$this->db->exec('DELETE FROM signalement WHERE idCommentaire = '.(int) $id);
 	}
 
 
@@ -86,7 +87,7 @@ class CommentaireManagerPDO {
 	 */
 
 	public final  function getList($start = -1, $end = -1) {
-		$sql = 'SELECT id, idBillet, idAuteur, contenu, dateAjout, dateEdit FROM commentaire ORDER BY id';
+		$sql = 'SELECT id, idBillet, idAuteur, contenu, dateAjout, dateEdit FROM commentaire ORDER BY idBillet, dateAjout DESC';
 
     // On vérifie l'intégrité des paramètres fournis.
     if ($start != -1 || $end != -1)
@@ -153,19 +154,17 @@ class CommentaireManagerPDO {
 	 */
 
 	public final  function getUnique($id) {
-	 $request = $this->db->prepare('SELECT id, title, container, dateAdd, dateEdit FROM commentaire WHERE id = :id');
+	 $request = $this->db->prepare('SELECT id, idBillet, idAuteur, contenu, dateAjout, dateEdit FROM commentaire WHERE id = :id');
 	 $request->bindValue(':id', (int) $id, PDO::PARAM_INT);
 	 $request->execute();
 	 $request->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Commentaire');
 
 	 $commentaire = $request->fetch();
 
-	 $commentaire->setDateAdd(new DateTime($commentaire->dateAdd()));
+	 $commentaire->setDateAjout(new DateTime($commentaire->dateAjout()));
 	 $commentaire->setDateEdit(new DateTime($commentaire->dateEdit()));
 
 	 return $commentaire;
 	}
-
-
 }
 ?>

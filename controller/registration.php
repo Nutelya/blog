@@ -1,7 +1,7 @@
 <?php
 require '../model/autoload.php';
 
-$db = DBFactory::getMysqlConnexionWithPDOuser();
+$db = DBFactory::getMysqlConnexionWithPDO();
 $manager = new UserManagerPDO($db);
 
 
@@ -19,7 +19,7 @@ if (isset($_POST['pseudo']) AND isset($_POST['email']) AND isset($_POST['passwor
       $manager->add($user);
   }
   else {
-    
+
   }
 }
 require('../view/frontend/registrationView.php')

@@ -14,7 +14,7 @@ if (isset($_POST['titre']))
   $billet = new Billet(
     [
       'title' => htmlspecialchars($_POST['titre']),
-      'container' => htmlspecialchars($_POST['contenu'])
+      'container' => $_POST['contenu']
     ]
   );
 

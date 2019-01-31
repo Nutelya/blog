@@ -5,7 +5,7 @@
  * written by KDO kdo@zpmag.com
  */
 
-class Billet {
+class Signalement {
 
 	/**
 	 *
@@ -16,50 +16,51 @@ class Billet {
 
 	/**
 	 *
-	 * @var string
+	 * @var int
 	 * @access protected
 	 */
-	protected  $title;
-
-	/**
-	 *
-	 * @var string
-	 * @access protected
-	 */
-	protected  $container;
-
-	/**
-	 *
-	 * @var string
-	 * @access protected
-	 */
-	protected  $dateAdd;
-
-	/**
-	 *
-	 * @var string
-	 * @access protected
-	 */
-	protected  $dateEdit;
+	protected  $idBillet;
 
 	/**
 	 *
 	 * @var int
 	 * @access protected
 	 */
-	protected  $corbeille;
+	protected  $idAuteur;
+
+	/**
+	 *
+	 * @var string
+	 * @access protected
+	 */
+	protected  $idCommentaire;
+
+	/**
+	 *
+	 * @var string
+	 * @access protected
+	 */
+	protected  $dateAjout;
+
+	/**
+	 *
+	 * @var boolean
+	 * @access protected
+	 */
+	protected  $estNouveau;
+
 
 	/**
 	 * @access public
-	 * @param array $value
+	 * @param array $values
 	 * @return void
 	 */
 
-	public final  function __construct($value = array()) {
-		if (!empty($value))
-			{
-				$this->hydrate($value);
-			}
+	public final  function __construct($values = array()) {
+		if (!empty($values))
+		{
+			$this->hydrate($values);
+		}
 	}
 
 
@@ -81,7 +82,7 @@ class Billet {
 		}
 	}
 
-	//setter//
+
 	/**
 	 * @access public
 	 * @param int $id
@@ -95,58 +96,59 @@ class Billet {
 
 	/**
 	 * @access public
-	 * @param string $title
+	 * @param int $idBillet
 	 * @return void
 	 */
 
-	public final  function setTitle($title) {
-		$this->title = $title;
+	public final  function setIdBillet($idBillet) {
+		$this->idBillet = (int) $idBillet;
 	}
 
 
 	/**
 	 * @access public
-	 * @param string $container
+	 * @param int $idAuteur
 	 * @return void
 	 */
 
-	public final  function setContainer($container) {
-		$this->container = $container;
+	public final  function setIdAuteur($idAuteur) {
+		$this->idAuteur = (int) $idAuteur;
 	}
 
 
 	/**
 	 * @access public
-	 * @param string $dateAdd
+	 * @param string $idCommentaire
 	 * @return void
 	 */
 
-	public final  function setDateAdd($dateAdd) {
-		$this->dateAdd = $dateAdd;
+	public final  function setIdCommentaire($idCommentaire) {
+		$this->idCommentaire = $idCommentaire;
 	}
 
 
 	/**
 	 * @access public
-	 * @param string $dateEdit
+	 * @param string $datAjout
 	 * @return void
 	 */
 
-	public final  function setDateEdit($dateEdit) {
-		$this->dateEdit = $dateEdit;
+	public final  function setDateAjout($dateAjout) {
+		$this->dateAjout = $dateAjout;
 	}
+
 
 	/**
 	 * @access public
-	 * @param int $id
+	 * @param boolean $estNouveau
 	 * @return void
 	 */
 
-	public final  function setCorbeille($corbeille) {
-		$this->corbeille = (int) $corbeille;
+	public final  function setEstNouveau($estNouveau) {
+		$this->estNouveau = $estNouveau;
 	}
 
-	//getter//
+
 	/**
 	 * @access public
 	 * @return int const
@@ -159,51 +161,53 @@ class Billet {
 
 	/**
 	 * @access public
-	 * @return string const
+	 * @return int const
 	 */
 
-	public final  function title() {
-		return $this->title;
+	public final  function idBillet() {
+		return $this->idBillet;
 	}
 
-
-	/**
-	 * @access public
-	 * @return string const
-	 */
-
-	public final  function container() {
-		return $this->container;
-	}
-
-
-	/**
-	 * @access public
-	 * @return string const
-	 */
-
-	public final  function dateAdd() {
-		return $this->dateAdd;
-	}
-
-
-	/**
-	 * @access public
-	 * @return string const
-	 */
-
-	public final  function dateEdit() {
-		return $this->dateEdit;
-	}
 
 	/**
 	 * @access public
 	 * @return int const
 	 */
 
-	public final  function corbeille() {
-		return $this->corbeille;
+	public final  function idAuteur() {
+		return $this->idAuteur;
 	}
+
+
+	/**
+	 * @access public
+	 * @return string const
+	 */
+
+	public final  function idCommentaire() {
+		return $this->idCommentaire;
+	}
+
+
+	/**
+	 * @access public
+	 * @return string const
+	 */
+
+	public final  function dateAjout() {
+		return $this->dateAjout;
+	}
+
+
+	/**
+	 * @access public
+	 * @return boolean const
+	 */
+
+	public final  function estNouveau() {
+		return $this->estNouveau;
+	}
+
 
 }
 ?>

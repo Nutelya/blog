@@ -34,9 +34,10 @@ class BilletManagerPDO {
 	 */
 
 	public final  function add(Billet $billet) {
-		$request = $this->db->prepare('INSERT INTO billet(title, container, dateAdd, dateEdit) VALUES(:title, :container, NOW(), NOW())');
+		$request = $this->db->prepare('INSERT INTO billet(title, container, dateAdd, dateEdit, corbeille) VALUES(:title, :container, NOW(), NOW(), :corbeille)');
 		$request->bindValue(':title', $billet->title());
 		$request->bindValue(':container', $billet->container());
+		$request->bindValue(':corbeille', 0, PDO::PARAM_INT);
 		$request->execute();
 	}
 
@@ -55,6 +56,19 @@ class BilletManagerPDO {
 		$request->execute();
 	}
 
+	/**
+	 * @access public
+	 * @param Billet $billet
+	 * @return void
+	 */
+
+	public final  function switchCorbeille($id, $corbeille) {
+		$request = $this->db->prepare('UPDATE billet SET corbeille = :corbeille WHERE id = :id');
+		$request->bindValue(':id', $id, PDO::PARAM_INT);
+		$request->bindValue(':corbeille', $corbeille, PDO::PARAM_INT);
+		$request->execute();
+	}
+
 
 	/**
 	 * @access public
@@ -64,6 +78,8 @@ class BilletManagerPDO {
 
 	public final  function delete($id) {
 		$this->db->exec('DELETE FROM billet WHERE id = '.(int) $id);
+		$this->db->exec('DELETE FROM commentaire WHERE idBillet = '.(int) $id);
+		$this->db->exec('DELETE FROM signalement WHERE idBillet = '.(int) $id);
 	}
 
 
@@ -84,8 +100,8 @@ class BilletManagerPDO {
 	 * @return array
 	 */
 
-	public final  function getList($start = -1, $end = -1) {
-		$sql = 'SELECT id, title, container, dateAdd, dateEdit FROM billet ORDER BY id DESC';
+	public final  function getList($start = -1, $end = -1, $corbeille = 0) {
+		$sql = "SELECT id, title, container, dateAdd, dateEdit, corbeille FROM billet WHERE corbeille = ". $corbeille ." ORDER BY id DESC";
 
     // On vérifie l'intégrité des paramètres fournis.
     if ($start != -1 || $end != -1)
