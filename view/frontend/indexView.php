@@ -44,42 +44,55 @@
 
             if ($billet->dateAdd() != $billet->dateEdit())
           {
-            echo '<p>Modifié le ', $billet->dateEdit()->format('d/m/Y à H\hi'), '</p>';
+            echo '<p>Dernière modification le ', $billet->dateEdit()->format('d/m/Y à H\hi'), '</p>';
           }
           echo '<h2 class="blog-post-title">Commentaires</h2>', "\n";
           foreach ($managerCom->getListCom(0, 10, $billet->id()) as $commentaire)
           {
             echo '<p id="com',$commentaire->id(),'">',$managerUser->getUnique($commentaire->idAuteur())->pseudo(),' - ',$managerUser->getUnique($commentaire->idAuteur())->role(),' - ',$commentaire->dateAjout()->format('d/m/Y à H\hi'),'</p>',
                  '<blockquote>',nl2br($commentaire->contenu()), '</blockquote>',
-                 '<br>',
-                 '<form action="index.php?id=',$billet->id(),'" method="post">',
-                 '<input type="hidden" name="idCommentaire" value="',$commentaire->id(),'"/>',
-                 '<input type="submit" value="Signaler" />',
-                 '</form>';
+                 '</br>';
+                 if (isset($_SESSION['id']) AND isset($_SESSION['pseudo'])) {
+                   echo '<form action="index.php?id=',$billet->id(),'" method="post">',
+                   '<input type="hidden" name="idCommentaire" value="',$commentaire->id(),'"/>',
+                   '<input type="submit" value="Signaler" />',
+                   '</form>';
+                 }
           }
           if (isset($_SESSION['id']) AND isset($_SESSION['pseudo']))
           {
-          echo '<br>',
+          echo '</br>',
                '<form id="commentary" action="index.php?id=',$billet->id(),'" method="post">',
                '<h4>Publier un commentaire</h4>',
                '<textarea rows="8" cols="60" name="comment"></textarea>',
                '<input type="submit" value="Valider" />',
                '</form>';
           }
+          else {
+            echo 'Vous devez être connecté pour publier un commentaire',
+                 '</br><a href="../controller/login.php">Se connecter</a>';
+          }
         }
-
         else
         {
-          foreach ($manager->getList(0, 5) as $billet)
+          if (isset($_GET['page'])) {
+            $fin = (htmlspecialchars($_GET['page']) * 5);
+            $début = ($fin - 5);
+          }
+          else {
+            $début = 0;
+            $fin = 5;
+          }
+          foreach ($manager->getList($début, $fin) as $billet)
           {
-            if (strlen($billet->container()) <= 200)
+            if (strlen($billet->container()) <= 360)
             {
               $container = $billet->container();
             }
 
             else
             {
-              $debut = substr($billet->container(), 0, 200);
+              $debut = substr($billet->container(), 0, 360);
               $debut = substr($debut, 0, strrpos($debut, ' ')) . '...';
 
               $container = $debut;

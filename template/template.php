@@ -34,8 +34,27 @@
     <?= $content ?>
           <nav>
             <ul class="pager">
-              <li><a href="#">Previous</a></li>
-              <li><a href="#">Next</a></li>
+            <?php
+            $page =(($manager->count() - ($manager->count() % 5)) / 5);
+            if (($manager->count() % 5) != 0) {
+              $page = $page + 1;
+            }
+            if (isset($_GET['page'])) {
+              if ($_GET['page'] == $page) {
+                echo '<li><a href="index.php?page=' . (htmlspecialchars($_GET['page']) - 1) .'">Précédant</a></li>';
+              }
+              else if ($_GET['page'] == 1) {
+                echo '<li><a href="index.php?page=' . (htmlspecialchars($_GET['page']) + 1) .'">Suivant</a></li>';
+              }
+              else {
+                echo '<li><a href="index.php?page=' . (htmlspecialchars($_GET['page']) - 1) .'">Précédant</a></li>',
+                     '<li><a href="index.php?page=' . (htmlspecialchars($_GET['page']) + 1) .'">Suivant</a></li>';
+              }
+            }
+            else if (!isset($_GET['id'])) {
+              echo '<li><a href="index.php?page=' . 2 .'">Suivant</a></li>';
+            }
+            ?>
             </ul>
           </nav>
 
@@ -47,28 +66,13 @@
             <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
           </div>
           <div class="sidebar-module">
-            <h4>Archives</h4>
+            <h4>Chapitres</h4>
             <ol class="list-unstyled">
-              <li><a href="#">March 2014</a></li>
-              <li><a href="#">February 2014</a></li>
-              <li><a href="#">January 2014</a></li>
-              <li><a href="#">December 2013</a></li>
-              <li><a href="#">November 2013</a></li>
-              <li><a href="#">October 2013</a></li>
-              <li><a href="#">September 2013</a></li>
-              <li><a href="#">August 2013</a></li>
-              <li><a href="#">July 2013</a></li>
-              <li><a href="#">June 2013</a></li>
-              <li><a href="#">May 2013</a></li>
-              <li><a href="#">April 2013</a></li>
-            </ol>
-          </div>
-          <div class="sidebar-module">
-            <h4>Elsewhere</h4>
-            <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
+              <?php
+              foreach ($manager->getList() as $billet) {
+                echo '<li><a href="index.php?id='.$billet->id().'">'.$billet->title().'</a></li>';
+              }
+              ?>
             </ol>
           </div>
         </div><!-- /.blog-sidebar -->

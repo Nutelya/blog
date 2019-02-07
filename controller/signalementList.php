@@ -14,4 +14,9 @@ if (isset($_GET['supprimer']))
 }
 
 require('../view/backend/signalementListView.php');
+
+if (isset($_GET['update']))
+{
+  $managerS->updateNew();
+}
 ?>

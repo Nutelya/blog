@@ -150,7 +150,7 @@ class UserManagerPDO {
 
 	public final function connexion($pseudo, $password) {
 		//  Récupération de l'utilisateur et de son pass hashé
-$req = $this->db->prepare('SELECT id, password FROM utilisateur WHERE pseudo = :pseudo');
+$req = $this->db->prepare('SELECT id, password, role FROM utilisateur WHERE pseudo = :pseudo');
 $req->execute(array(
     ':pseudo' => $pseudo));
 $resultat = $req->fetch();
@@ -158,20 +158,13 @@ $resultat = $req->fetch();
 // Comparaison du pass envoyé via le formulaire avec la base
 $isPasswordCorrect = password_verify($password, $resultat['password']);
 
-if (!$resultat)
-{
-    echo 'Mauvais identifiant ou mot de passe !';
-}
-else
+if ($resultat)
 {
     if ($isPasswordCorrect) {
         session_start();
         $_SESSION['id'] = $resultat['id'];
         $_SESSION['pseudo'] = $pseudo;
-        echo 'Vous êtes connecté !';
-    }
-    else {
-        echo 'Mauvais identifiant ou mot de passe !';
+				$_SESSION['role'] = $resultat['role'];
     }
 }
 	}

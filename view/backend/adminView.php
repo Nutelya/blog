@@ -5,9 +5,9 @@
     <!-- Breadcrumbs-->
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href="#">Dashboard</a>
+              <a href="#">Tableau de bord</a>
             </li>
-            <li class="breadcrumb-item active">Overview</li>
+            <li class="breadcrumb-item active">Vue globale</li>
           </ol>
 
           <!-- Icon Cards-->
@@ -21,7 +21,7 @@
                   <div class="mr-5">26 New Messages!</div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="#">
-                  <span class="float-left">View Details</span>
+                  <span class="float-left">Détails</span>
                   <span class="float-right">
                     <i class="fas fa-angle-right"></i>
                   </span>
@@ -34,10 +34,21 @@
                   <div class="card-body-icon">
                     <i class="fas fa-fw fa-list"></i>
                   </div>
-                  <div class="mr-5">11 New Tasks!</div>
+                  <?php echo '<div class="mr-5">';
+                  if ($managerSignalement->countNew() == 0){
+                    echo "Aucun nouveau signalement";
+                  }
+                  else if ($managerSignalement->countNew() == 1) {
+                    echo $managerSignalement->countNew(). ' nouveau signalement !';
+                  }
+                  else {
+                    echo $managerSignalement->countNew(). ' nouveaux signalements !';
+                  }
+                  echo '</div>';
+                  ?>
                 </div>
-                <a class="card-footer text-white clearfix small z-1" href="#">
-                  <span class="float-left">View Details</span>
+                <a class="card-footer text-white clearfix small z-1" href="signalementList.php?update=yes">
+                  <span class="float-left">Détails</span>
                   <span class="float-right">
                     <i class="fas fa-angle-right"></i>
                   </span>
@@ -53,7 +64,7 @@
                   <div class="mr-5">123 New Orders!</div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="#">
-                  <span class="float-left">View Details</span>
+                  <span class="float-left">Détails</span>
                   <span class="float-right">
                     <i class="fas fa-angle-right"></i>
                   </span>
@@ -69,7 +80,7 @@
                   <div class="mr-5">13 New Tickets!</div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="#">
-                  <span class="float-left">View Details</span>
+                  <span class="float-left">Détails</span>
                   <span class="float-right">
                     <i class="fas fa-angle-right"></i>
                   </span>

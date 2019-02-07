@@ -20,6 +20,8 @@
     <!-- Custom styles for this template-->
     <link href="../bootstrapAdmin/css/sb-admin.css" rel="stylesheet">
 
+    <link href="../public/css/edit.css" rel="stylesheet">
+
   </head>
 
   <body class="bg-dark">
@@ -28,27 +30,31 @@
       <div class="card card-login mx-auto mt-5">
         <div class="card-header">Connexion</div>
         <div class="card-body">
-          <form method="post" action="../controller/login.php">
+          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <div class="form-group">
               <div class="form-label-group">
-                <input type="pseudo" id="pseudo" name="pseudo" class="form-control" placeholder="Pseudonyme" required="required" autofocus="autofocus">
+                <input type="pseudo" id="pseudo" name="pseudo" <?php if (isset($_COOKIE['pseudo'])) { echo 'value="'. $_COOKIE['pseudo'] . '"';} else { echo 'autofocus="autofocus"';} ?> class="form-control" placeholder="Pseudonyme" required="required">
                 <label for="pseudo">Pseudo</label>
               </div>
             </div>
             <div class="form-group">
               <div class="form-label-group">
-                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="required">
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="required" <?php if (isset($_COOKIE['pseudo'])) { echo 'autofocus="autofocus"';} ?> >
                 <label for="password">Mot de passe</label>
               </div>
             </div>
             <div class="form-group">
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" value="remember-me">
+                  <input type="checkbox" name='souvenir' value="remember-me" <?php if (isset($_COOKIE['pseudo'])) { echo 'checked';}?>>
                   Se souvenir de moi
                 </label>
+                <?php if (isset($erreur)) {
+                  echo '</br><span class="erreur">'.$erreur.'</span>';
+                } ?>
               </div>
             </div>
+
             <input type="submit" class="btn btn-primary btn-block"  value="Connexion" />
           </form>
           <div class="text-center">

@@ -75,6 +75,25 @@ class SignalementManagerPDO {
 		return $this->db->query('SELECT COUNT(*) FROM signalement')->fetchColumn();
 	}
 
+	/**
+	 * @access public
+	 * @return int
+	 */
+
+	public final  function countNew() {
+		return $this->db->query('SELECT COUNT(*) FROM signalement WHERE estNouveau = 1')->fetchColumn();
+	}
+
+	/**
+	 * @access public
+	 * @return void
+	 */
+
+	public final  function updateNew() {
+		$request = $this->db->prepare('UPDATE signalement SET estNouveau = 0 WHERE estNouveau = 1');
+		$request->execute();
+	}
+
 
 	/**
 	 * @access public
