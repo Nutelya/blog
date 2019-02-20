@@ -20,6 +20,8 @@
     <!-- Custom styles for this template-->
     <link href="../bootstrapAdmin/css/sb-admin.css" rel="stylesheet">
 
+    <link href="../public/css/edit.css" rel="stylesheet">
+
   </head>
 
   <body class="bg-dark">
@@ -31,14 +33,20 @@
           <form method="post">
             <div class="form-group">
               <div class="form-label-group">
-                <input type="text" id="pseudo" name="pseudo" class="form-control" placeholder="Pseudo" required="required" autofocus="autofocus">
+                <input type="text" id="pseudo" name="pseudo" class="form-control" placeholder="Pseudo" <?php if (isset($_POST['pseudo'])) echo 'value="'.htmlspecialchars($_POST['pseudo']).'"'; ?> required="required" autofocus="autofocus">
                 <label for="pseudo">Pseudo</label>
+                <?php if (isset($erreurPseudo)) {
+                  echo '<span class="erreur">'.$erreurPseudo.'</span>';
+                } ?>
               </div>
             </div>
             <div class="form-group">
               <div class="form-label-group">
-                <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Adresse Email" required="required">
+                <input type="email" id="inputEmail" name="email" class="form-control" <?php if (isset($_POST['email'])) echo 'value="'.htmlspecialchars($_POST['email']).'"'; ?> placeholder="Adresse Email" required="required">
                 <label for="inputEmail">Adresse Email</label>
+                <?php if (isset($erreurEmail)) {
+                  echo '<span class="erreur">'.$erreurEmail.'</span>';
+                } ?>
               </div>
             </div>
             <div class="form-group">
@@ -46,7 +54,7 @@
                 <div class="col-md-6">
                   <div class="form-label-group">
                     <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Mot de passe" required="required">
-                    <label for="inputPassword">Mot de passe</label>
+                    <label for="inputPassword">Mot de passe (7 ~ 30 lettres)</label>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -55,12 +63,14 @@
                     <label for="confirmPassword">Confirmation du mot de passe</label>
                   </div>
                 </div>
+                <?php if (isset($erreurMdp)) {
+                  echo '<span class="erreur">'.$erreurMdp.'</span>';
+                } ?>
               </div>
             </div>
             <input type="submit" class="btn btn-primary btn-block" href="login.html" value="Inscription" />
           </form>
           <div class="text-center">
-            <a class="d-block small mt-3" href="<?php echo htmlspecialchars($_SERVER['HTTP_REFERER']) ?>">Revenir à la dernière page</a>
             <a class="d-block small mt-3" href="../index.php">Accueil</a>
             <a class="d-block small mt-3" href="login.php">Se connecter</a>
           </div>

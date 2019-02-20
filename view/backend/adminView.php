@@ -16,11 +16,22 @@
               <div class="card text-white bg-primary o-hidden h-100">
                 <div class="card-body">
                   <div class="card-body-icon">
-                    <i class="fas fa-fw fa-comments"></i>
+                    <i class="fas fa-fw fa-comment-alt"></i>
                   </div>
-                  <div class="mr-5">26 New Messages!</div>
+                  <?php echo '<div class="mr-5">';
+                  if ($managerCom->countNew() == 0){
+                    echo "Aucun nouveau commentaire";
+                  }
+                  else if ($managerCom->countNew() == 1) {
+                    echo $managerCom->countNew(). ' nouveau commentaire !';
+                  }
+                  else {
+                    echo $managerCom->countNew(). ' nouveaux commentaires !';
+                  }
+                  echo '</div>';
+                  ?>
                 </div>
-                <a class="card-footer text-white clearfix small z-1" href="#">
+                <a class="card-footer text-white clearfix small z-1" href="commentaireList.php">
                   <span class="float-left">Détails</span>
                   <span class="float-right">
                     <i class="fas fa-angle-right"></i>
@@ -32,7 +43,7 @@
               <div class="card text-white bg-warning o-hidden h-100">
                 <div class="card-body">
                   <div class="card-body-icon">
-                    <i class="fas fa-fw fa-list"></i>
+                    <i class="fas fa-fw fa-flag"></i>
                   </div>
                   <?php echo '<div class="mr-5">';
                   if ($managerSignalement->countNew() == 0){
@@ -47,39 +58,7 @@
                   echo '</div>';
                   ?>
                 </div>
-                <a class="card-footer text-white clearfix small z-1" href="signalementList.php?update=yes">
-                  <span class="float-left">Détails</span>
-                  <span class="float-right">
-                    <i class="fas fa-angle-right"></i>
-                  </span>
-                </a>
-              </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 mb-3">
-              <div class="card text-white bg-success o-hidden h-100">
-                <div class="card-body">
-                  <div class="card-body-icon">
-                    <i class="fas fa-fw fa-shopping-cart"></i>
-                  </div>
-                  <div class="mr-5">123 New Orders!</div>
-                </div>
-                <a class="card-footer text-white clearfix small z-1" href="#">
-                  <span class="float-left">Détails</span>
-                  <span class="float-right">
-                    <i class="fas fa-angle-right"></i>
-                  </span>
-                </a>
-              </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 mb-3">
-              <div class="card text-white bg-danger o-hidden h-100">
-                <div class="card-body">
-                  <div class="card-body-icon">
-                    <i class="fas fa-fw fa-life-ring"></i>
-                  </div>
-                  <div class="mr-5">13 New Tickets!</div>
-                </div>
-                <a class="card-footer text-white clearfix small z-1" href="#">
+                <a class="card-footer text-white clearfix small z-1" href="signalementList.php">
                   <span class="float-left">Détails</span>
                   <span class="float-right">
                     <i class="fas fa-angle-right"></i>

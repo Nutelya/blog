@@ -49,6 +49,13 @@ class Signalement {
 	 */
 	protected  $estNouveau;
 
+	/**
+	 *
+	 * @var int
+	 * @access protected
+	 */
+	protected  $idSignale;
+
 
 	/**
 	 * @access public
@@ -148,6 +155,16 @@ class Signalement {
 		$this->estNouveau = $estNouveau;
 	}
 
+	/**
+	 * @access public
+	 * @param int $idSignale
+	 * @return void
+	 */
+
+	public final  function setIdSignale($idSignale) {
+		$this->idSignale = $idSignale;
+	}
+
 
 	/**
 	 * @access public
@@ -206,6 +223,15 @@ class Signalement {
 
 	public final  function estNouveau() {
 		return $this->estNouveau;
+	}
+
+	/**
+	 * @access public
+	 * @return int const
+	 */
+
+	public final  function idSignale() {
+		return $this->idSignale;
 	}
 
 

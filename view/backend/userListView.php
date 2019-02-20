@@ -2,6 +2,13 @@
 <?php ob_start(); ?>
     <div id="content-wrapper">
       <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#">Gestion des utilisateurs</a>
+          </li>
+          <li class="breadcrumb-item active">Liste des utilisateurs</li>
+        </ol>
           <div class="card mb-3">
             <div class="card-header">
               <i class="fas fa-table"></i>
@@ -13,16 +20,16 @@
                   <thead>
                     <tr>
                       <th>Pseudo</th>
-                      <th>Mot de passe</th>
                       <th>Email</th>
                       <th>Date d'inscription</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
                     foreach ($manager->getList() as $user)
                     {
-                      echo '<tr><td>', $user->pseudo(), '</td><td>', $user->password(), '</td><td>', $user->email(), '</td><td>', $user->date_register()->format('d/m/Y à H\hi'), '</td></tr>', "\n";
+                      echo '<tr><td>', $user->pseudo(), '</td><td>', $user->email(), '</td><td>', $user->date_register()->format('d/m/Y à H\hi'), '</td><td><a href="utilisateurDetails.php?idUser=',$user->id(),'">Détails</a> | <a href="?delU=',$user->id(),'">Supprimer</a></td></tr>', "\n";
                     }
                     ?>
                   </tbody>

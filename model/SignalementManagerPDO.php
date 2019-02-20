@@ -34,12 +34,37 @@ class SignalementManagerPDO {
 	 */
 
 	public final  function add(Signalement $signalement) {
-		$request = $this->db->prepare('INSERT INTO signalement(idBillet, idAuteur, idCommentaire, dateAjout, estNouveau) VALUES(:idBillet, :idAuteur, :idCommentaire, NOW(), :estNouveau)');
+		$request = $this->db->prepare('INSERT INTO signalement(idBillet, idAuteur, idCommentaire, dateAjout, estNouveau, idSignale) VALUES(:idBillet, :idAuteur, :idCommentaire, NOW(), :estNouveau, :idSignale)');
 		$request->bindValue(':idBillet', $signalement->idBillet());
 		$request->bindValue(':idAuteur', $signalement->idAuteur());
     $request->bindValue(':idCommentaire', $signalement->idCommentaire());
+		$request->bindValue(':idSignale', $signalement->idSignale());
     $request->bindValue(':estNouveau', 1);
 		$request->execute();
+	}
+
+	/**
+	 * @access public
+	 * @param int $idCommentaire
+	 * @param int $idSignaleur
+	 * @return boolean
+	 */
+
+	public final  function peutSignaler($idAuteur, $idCommentaire) {
+		$request = $this->db->prepare('SELECT idAuteur, idCommentaire FROM signalement WHERE (idAuteur = :idAuteur) AND (idCommentaire = :idCommentaire)');
+		$request->bindValue(':idAuteur', $idAuteur, PDO::PARAM_INT);
+		$request->bindValue(':idCommentaire', $idCommentaire, PDO::PARAM_INT);
+		$request->execute();
+		$request->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Signalement');
+
+ 	  $signalement = $request->fetch();
+		if (empty($signalement)) {
+			$signal = true;
+		}
+		else {
+			$signal = false;
+		}
+		return $signal;
 	}
 
 
@@ -51,10 +76,21 @@ class SignalementManagerPDO {
 
 	public final  function update(Signalement $signalement) {
 		$request = $this->db->prepare('UPDATE signalement SET estNouveau = :estNouveau WHERE id = :id');
+		$request->bindValue(':estNouveau', $signalement->id(), PDO::INT);
 		$request->bindValue(':estNouveau', 1, PDO::PARAM_BOOL);
 		$request->execute();
 	}
 
+
+	/**
+	 * @access public
+	 * @param int $id
+	 * @return void
+	 */
+
+	public final  function deleteTous($id) {
+		$this->db->exec('DELETE FROM signalement WHERE idCommentaire = '.(int) $id);
+	}
 
 	/**
 	 * @access public
@@ -86,13 +122,19 @@ class SignalementManagerPDO {
 
 	/**
 	 * @access public
+	 * @param int $id,$type
 	 * @return void
 	 */
 
-	public final  function updateNew() {
-		$request = $this->db->prepare('UPDATE signalement SET estNouveau = 0 WHERE estNouveau = 1');
-		$request->execute();
-	}
+	 public final  function updateNew($id, $type) {
+ 		if ($type == 0) {
+ 			$request = $this->db->prepare('UPDATE signalement SET estNouveau = 0 WHERE idCommentaire = :idCommentaire');
+ 		} else if ($type == 1) {
+ 			$request = $this->db->prepare('UPDATE signalement SET estNouveau = 1 WHERE idCommentaire = :idCommentaire');
+ 		}
+ 		$request->bindValue(':idCommentaire', $id, PDO::PARAM_INT);
+ 		$request->execute();
+ 	}
 
 
 	/**
@@ -102,8 +144,13 @@ class SignalementManagerPDO {
 	 * @return array
 	 */
 
-	public final  function getList($start = -1, $end = -1) {
-		$sql = 'SELECT id, idBillet, idAuteur, idCommentaire, dateAjout, estNouveau FROM signalement ORDER BY idCommentaire, dateAjout DESC';
+	public final  function getList($start = -1, $end = -1, $type = -1) {
+		if ($type == -1) {
+			$sql = "SELECT id, idBillet, idAuteur, idCommentaire, dateAjout, estNouveau FROM signalement ORDER BY estNouveau DESC, dateAjout DESC";
+		} else {
+				$sql = "SELECT id, idBillet, idAuteur, idCommentaire, dateAjout, estNouveau FROM signalement WHERE idCommentaire = " .$type. " ORDER BY idCommentaire, dateAjout DESC";
+		}
+
 
     // On vérifie l'intégrité des paramètres fournis.
     if ($start != -1 || $end != -1)

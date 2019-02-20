@@ -25,7 +25,8 @@ if (isset($_POST['idCommentaire']))
     [
       'idCommentaire' => htmlspecialchars($_POST['idCommentaire']),
       'idAuteur' => htmlspecialchars($_SESSION['id']),
-      'idBillet' => htmlspecialchars($_GET['id'])
+      'idBillet' => htmlspecialchars($_GET['id']),
+      'idSignale' => htmlspecialchars($_POST['idCommentaireAuteur'])
     ]
   );
     $managerSignalement->add($signalement);

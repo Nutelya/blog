@@ -8,9 +8,11 @@ $managerU = new UserManagerPDO($db);
 $managerS = new SignalementManagerPDO($db);
 
 
-if (isset($_GET['supprimer']))
+if (isset($_GET['idUser']))
 {
-  $managerS->delete((int) $_GET['supprimer']);
+  $utilisateur = $managerU->getUnique((int) $_GET['idUser']);
 }
-require('../view/backend/signalementListView.php');
+
+
+require('../view/backend/utilisateurView.php');
 ?>

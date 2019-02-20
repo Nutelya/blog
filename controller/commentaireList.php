@@ -11,6 +11,5 @@ if (isset($_GET['supprimer']))
 {
   $manager->delete((int) $_GET['supprimer']);
 }
-
 require('../view/backend/commentaireListView.php');
 ?>

@@ -34,10 +34,11 @@ class CommentaireManagerPDO {
 	 */
 
 	public final  function add(Commentaire $commentaire) {
-		$request = $this->db->prepare('INSERT INTO commentaire(idBillet, idAuteur, contenu, dateAjout, dateEdit) VALUES(:idBillet, :idAuteur, :contenu, NOW(), NOW())');
+		$request = $this->db->prepare('INSERT INTO commentaire(idBillet, idAuteur, contenu, dateAjout, dateEdit, estNouveau) VALUES(:idBillet, :idAuteur, :contenu, NOW(), NOW(), :estNouveau)');
 		$request->bindValue(':idBillet', $commentaire->idBillet());
 		$request->bindValue(':idAuteur', $commentaire->idAuteur());
     $request->bindValue(':contenu', $commentaire->contenu());
+		$request->bindValue(':estNouveau', 1, PDO::PARAM_BOOL);
 		$request->execute();
 	}
 
@@ -49,10 +50,25 @@ class CommentaireManagerPDO {
 	 */
 
 	public final  function update(Commentaire $commentaire) {
-		$request = $this->db->prepare('UPDATE commentaire SET title = :title, container = :container, dateEdit = NOW() WHERE id = :id');
+		$request = $this->db->prepare('UPDATE commentaire SET contenu = :contenu, dateEdit = NOW() WHERE id = :id');
 		$request->bindValue(':id', $commentaire->id(), PDO::PARAM_INT);
-		$request->bindValue(':title', $commentaire->title());
-		$request->bindValue(':container', $commentaire->container());
+		$request->bindValue(':contenu', $commentaire->contenu());
+		$request->execute();
+	}
+
+	/**
+	 * @access public
+	 * @param int $id,$type
+	 * @return void
+	 */
+	 
+	public final  function updateNew($id, $type) {
+		if ($type == 0) {
+			$request = $this->db->prepare('UPDATE commentaire SET estNouveau = 0 WHERE id = :id');
+		} else if ($type == 1) {
+			$request = $this->db->prepare('UPDATE commentaire SET estNouveau = 1 WHERE id = :id');
+		}
+		$request->bindValue(':id', $id, PDO::PARAM_INT);
 		$request->execute();
 	}
 
@@ -78,6 +94,15 @@ class CommentaireManagerPDO {
 		return $this->db->query('SELECT COUNT(*) FROM commentaire')->fetchColumn();
 	}
 
+	/**
+	 * @access public
+	 * @return int
+	 */
+
+	public final  function countNew() {
+		return $this->db->query('SELECT COUNT(*) FROM commentaire WHERE estNouveau = 1')->fetchColumn();
+	}
+
 
 	/**
 	 * @access public
@@ -87,7 +112,8 @@ class CommentaireManagerPDO {
 	 */
 
 	public final  function getList($start = -1, $end = -1) {
-		$sql = 'SELECT id, idBillet, idAuteur, contenu, dateAjout, dateEdit FROM commentaire ORDER BY idBillet, dateAjout DESC';
+		$sql = "SELECT id, idBillet, idAuteur, contenu, dateAjout, dateEdit, estNouveau FROM commentaire ORDER BY estNouveau DESC, dateAjout DESC";
+
 
     // On vérifie l'intégrité des paramètres fournis.
     if ($start != -1 || $end != -1)

@@ -49,6 +49,13 @@ class Commentaire {
 	 */
 	protected  $dateEdit;
 
+	/**
+	 *
+	 * @var boolean
+	 * @access protected
+	 */
+	protected  $estNouveau;
+
 
 	/**
 	 * @access public
@@ -148,6 +155,16 @@ class Commentaire {
 		$this->dateEdit = $dateEdit;
 	}
 
+	/**
+	 * @access public
+	 * @param boolean $estNouveau
+	 * @return void
+	 */
+
+	public final  function setEstNouveau($estNouveau) {
+		$this->estNouveau = (boolean) $estNouveau;
+	}
+
 
 	/**
 	 * @access public
@@ -208,6 +225,14 @@ class Commentaire {
 		return $this->dateEdit;
 	}
 
+	/**
+	 * @access public
+	 * @return boolean const
+	 */
+
+	public final  function estNouveau() {
+		return $this->estNouveau;
+	}
 
 }
 ?>

@@ -41,6 +41,36 @@ class UserManagerPDO {
 		$request->execute();
 	}
 
+	public final function verifyPseudo($pseudo) {
+		$sql = 'SELECT id, pseudo, password, email, date_register FROM utilisateur WHERE pseudo = :pseudo';
+		$request = $this->db->prepare($sql);
+		$request->bindValue(':pseudo',$pseudo);
+		$test = $request->execute();
+		$request->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
+    $test = $request->fetchAll();
+		if (empty($test)) {
+			$resultat = false;
+		} else {
+			$resultat = true;
+		}
+		return $resultat;
+	}
+
+	public final function verifyEmail($email) {
+		$sql = 'SELECT id, pseudo, password, email, date_register FROM utilisateur WHERE email = :email';
+		$request = $this->db->prepare($sql);
+		$request->bindValue(':email',$email);
+		$test = $request->execute();
+		$request->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
+    $test = $request->fetchAll();
+		if (empty($test)) {
+			$resultat = false;
+		} else {
+			$resultat = true;
+		}
+		return $resultat;
+	}
+
 
 	/**
 	 * @access protected
@@ -71,7 +101,10 @@ class UserManagerPDO {
 	 */
 
 	public final  function delete($id) {
-
+			$this->db->exec('DELETE FROM utilisateur WHERE id = '.(int) $id);
+			$this->db->exec('DELETE FROM commentaire WHERE idAuteur = '.(int) $id);
+			$this->db->exec('DELETE FROM signalement WHERE idAuteur = '.(int) $id);
+			$this->db->exec('DELETE FROM signalement WHERE idSignale = '.(int) $id);
 	}
 
 
@@ -93,8 +126,8 @@ class UserManagerPDO {
 	 */
 
 	public final  function getList($start = -1, $end = -1) {
-		$sql = 'SELECT id, pseudo, password, email, date_register FROM utilisateur ORDER BY id DESC';
 
+		$sql = 'SELECT id, pseudo, password, email, date_register FROM utilisateur ORDER BY id DESC';
     // On vérifie l'intégrité des paramètres fournis.
     if ($start != -1 || $end != -1)
     {
