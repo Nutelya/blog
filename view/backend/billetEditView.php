@@ -9,7 +9,7 @@
           </li>
           <li class="breadcrumb-item active">Modifier un billet</li>
         </ol>
-        <form id="get-data-form" action="billetEdit.php" method="post">
+        <form id="get-data-form" action="?action=billetEdit" method="post">
           <div class="card mb-3">
             <div class="card-header">
               <i class="fas fa-chart-area"></i>
@@ -27,4 +27,4 @@
       </div>
     </div>
 <?php $content = ob_get_clean(); ?>
-<?php require('../template/templateAdmin.php'); ?>
+<?php require('../blog/template/templateAdmin.php'); ?>

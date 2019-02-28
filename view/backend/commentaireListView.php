@@ -32,7 +32,7 @@
                   </thead>
                   <tbody>
                     <?php
-                    foreach ($manager->getList() as $commentaire)
+                    foreach ($listeCom as $commentaire)
                     {
                       echo '<tr>';
                       if ($commentaire->estNouveau() == 1) {
@@ -40,7 +40,7 @@
                       } else {
                         echo '<td> <span style="font-size: 1.5em; color: grey;">';
                       }
-                      echo '<i class="fas fa-comment-alt"></i></span></td><td>', $managerU->getUnique($commentaire->idAuteur())->pseudo(), '</td><td>', $commentaire->contenu(), '</td><td><a href="../index.php?id=',$commentaire->idBillet(),'#',$commentaire->idBillet(),'" >', $managerB->getUnique($commentaire->idBillet())->title(), '</a></td><td>', $commentaire->dateAjout()->format('d/m/Y à H\hi'), '</td><td>', ($commentaire->dateAjout() == $commentaire->dateEdit() ? '-' : $commentaire->dateEdit()->format('d/m/Y à H\hi')), '</td><td><a href="../controller/commentaireDetails.php?id=', $commentaire->id(), '">Modifier</a> | <a href="?supprimer=', $commentaire->id(), '">Supprimer</a></td></tr>', "\n";
+                      echo '<i class="fas fa-comment-alt"></i></span></td><td>', $managerUser->getUnique($commentaire->idAuteur())->pseudo(), '</td><td>', $commentaire->contenu(), '</td><td><a href="../index.php?id=',$commentaire->idBillet(),'#',$commentaire->idBillet(),'" >', $manager->getUnique($commentaire->idBillet())->title(), '</a></td><td>', $commentaire->dateAjout()->format('d/m/Y à H\hi'), '</td><td>', ($commentaire->dateAjout() == $commentaire->dateEdit() ? '-' : $commentaire->dateEdit()->format('d/m/Y à H\hi')), '</td><td><a href="../blog/index.php?action=commentaireDetails&id=', $commentaire->id(), '">Modifier</a> | <a href="?action=commentaireListe&supprimer=', $commentaire->id(),'">Supprimer</a></td></tr>', "\n";
                     }
                     ?>
                   </tbody>
@@ -52,4 +52,4 @@
       </div>
     </div>
 <?php $content = ob_get_clean(); ?>
-<?php require('../template/templateAdmin.php'); ?>
+<?php require('../blog/template/templateAdmin.php'); ?>

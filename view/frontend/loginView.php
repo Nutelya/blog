@@ -12,15 +12,15 @@
     <title>Page de connexion</title>
 
     <!-- Bootstrap core CSS-->
-    <link href="../bootstrapAdmin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../blog/bootstrapAdmin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template-->
-    <link href="../bootstrapAdmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../blog/bootstrapAdmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
     <!-- Custom styles for this template-->
-    <link href="../bootstrapAdmin/css/sb-admin.css" rel="stylesheet">
+    <link href="../blog/bootstrapAdmin/css/sb-admin.css" rel="stylesheet">
 
-    <link href="../public/css/edit.css" rel="stylesheet">
+    <link href="../blog/public/css/edit.css" rel="stylesheet">
 
   </head>
 
@@ -30,7 +30,7 @@
       <div class="card card-login mx-auto mt-5">
         <div class="card-header">Connexion</div>
         <div class="card-body">
-          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+          <form method="post" action="../blog/index.php?action=login">
             <div class="form-group">
               <div class="form-label-group">
                 <input type="pseudo" id="pseudo" name="pseudo" <?php if (isset($_COOKIE['pseudo'])) { echo 'value="'. $_COOKIE['pseudo'] . '"';} else { echo 'autofocus="autofocus"';} ?> class="form-control" placeholder="Pseudonyme" required="required">
@@ -59,8 +59,8 @@
           </form>
           <div class="text-center">
             <a class="d-block small mt-3" href="forgot-password.html">Mot de passe oublié?</a>
-            <a class="d-block small mt-3" href="registration.php">S'inscrire</a>
-            <a class="d-block small mt-3" href="../index.php">Retourner à l'accueil</a>
+            <a class="d-block small mt-3" href="../blog/index.php?action=register">S'inscrire</a>
+            <a class="d-block small mt-3" href="../blog/index.php">Retourner à l'accueil</a>
 
           </div>
         </div>
@@ -68,11 +68,11 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="../bootstrapAdmin/vendor/jquery/jquery.min.js"></script>
-    <script src="../bootstrapAdmin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../blog/bootstrapAdmin/vendor/jquery/jquery.min.js"></script>
+    <script src="../blog/bootstrapAdmin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="../bootstrapAdmin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../blog/bootstrapAdmin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   </body>
 

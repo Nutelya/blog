@@ -19,11 +19,9 @@
               <p>Email : <?php echo $utilisateur->email();?></p>
               <p>Role : <?php echo $utilisateur->role();?></p>
               <p>Date d'inscription : <?php echo $utilisateur->date_register()->format('d/m/Y');?></p>
-              <p>Nombre de commentaires : </p>
-              <p>Nombre de signalements : </p>
             </div>
           </div>
         </div>
     </div>
 <?php $content = ob_get_clean(); ?>
-<?php require('../template/templateAdmin.php'); ?>
+<?php require('../blog/template/templateAdmin.php'); ?>

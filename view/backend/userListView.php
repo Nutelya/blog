@@ -27,9 +27,9 @@
                   </thead>
                   <tbody>
                     <?php
-                    foreach ($manager->getList() as $user)
+                    foreach ($listeUser as $user)
                     {
-                      echo '<tr><td>', $user->pseudo(), '</td><td>', $user->email(), '</td><td>', $user->date_register()->format('d/m/Y à H\hi'), '</td><td><a href="utilisateurDetails.php?idUser=',$user->id(),'">Détails</a> | <a href="?delU=',$user->id(),'">Supprimer</a></td></tr>', "\n";
+                      echo '<tr><td>', $user->pseudo(), '</td><td>', $user->email(), '</td><td>', $user->date_register()->format('d/m/Y à H\hi'), '</td><td><a href="?action=userDetails&idUser=',$user->id(),'">Détails</a> | <a href="?action=userList&delU=',$user->id(),'">Supprimer</a></td></tr>', "\n";
                     }
                     ?>
                   </tbody>
@@ -41,4 +41,4 @@
       </div>
     </div>
 <?php $content = ob_get_clean(); ?>
-<?php require('../template/templateAdmin.php'); ?>
+<?php require('../blog/template/templateAdmin.php'); ?>

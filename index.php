@@ -1,39 +1,157 @@
 <?php
-require 'model/autoload.php';
+
+require('/controller/controller.php');
 session_start();
-$db = DBFactory::getMysqlConnexionWithPDO();
-$manager = new billetManagerPDO($db);
-$managerCom = new CommentaireManagerPDO($db);
-$managerUser = new UserManagerPDO($db);
-$managerSignalement = new SignalementManagerPDO($db);
-
-if (isset($_POST['comment']))
-{
-  $commentaire = new Commentaire(
-    [
-      'contenu' => htmlspecialchars($_POST['comment']),
-      'idAuteur' => htmlspecialchars($_SESSION['id']),
-      'idBillet' => htmlspecialchars($_GET['id'])
-    ]
-  );
-    $managerCom->add($commentaire);
+if (isset($_GET['action'])) {
+  if ($_GET['action'] == 'listeBillets') {
+    listeBillets($manager,$managerCom,$managerUser,$managerSignalement);
+  }
+  else if ($_GET['action'] == 'profil') {
+    if (isset($_SESSION['id']))
+    {
+      profil($manager,$managerCom,$managerUser,$managerSignalement);
+    }
+    else {
+      echo 'Erreur 404';
+    }
+  }
+  else if ($_GET['action'] == 'login') {
+    if (!isset($_SESSION['id'])) {
+      login($managerUser);
+    }
+    else {
+      echo "Vous n'avez pas accès à cette page";
+    }
+  }
+  else if ($_GET['action'] == 'register') {
+    if (!isset($_SESSION['id'])) {
+      register($managerUser);
+    }
+    else {
+      echo "Vous n'avez pas accès à cette page";
+    }
+  }
+  else if ($_GET['action'] == 'disconnect') {
+    if (isset($_SESSION['id'])) {
+      disconnect();
+    }
+    else {
+      echo "Vous n'avez pas accès à cette page";
+    }
+  }
+  else if ($_GET['action'] == 'dashboard') {
+    if (isset($_SESSION['role'])) {
+      if ($_SESSION['role'] == 'admin') {
+        dashboard($managerCom,$managerUser,$managerSignalement);
+      } else {
+        echo "Vous n'avez pas accès à cette page";
+      }
+    } else {
+      echo "Vous n'avez pas accès à cette page";
+    }
+  }
+  else if ($_GET['action'] == 'commentaireListe' ) {
+    if (isset($_SESSION['role'])) {
+      if ($_SESSION['role'] == 'admin') {
+        commentaireListe($manager,$managerCom,$managerUser);
+      } else {
+        echo "Vous n'avez pas accès à cette page";
+      }
+    } else {
+      echo "Vous n'avez pas accès à cette page";
+    }
+  }
+  else if ($_GET['action'] == 'commentaireDetails') {
+    if (isset($_SESSION['role'])) {
+      if ($_SESSION['role'] == 'admin') {
+        commentaireDetails($manager,$managerCom,$managerUser,$managerSignalement);
+      } else {
+        echo "Vous n'avez pas accès à cette page";
+      }
+    } else {
+      echo "Vous n'avez pas accès à cette page";
+    }
+  }
+  else if ($_GET['action'] == 'signalementListe') {
+    if (isset($_SESSION['role'])) {
+      if ($_SESSION['role'] == 'admin') {
+        signalementListe($manager,$managerCom,$managerUser,$managerSignalement);
+      } else {
+        echo "Vous n'avez pas accès à cette page";
+      }
+    } else {
+      echo "Vous n'avez pas accès à cette page";
+    }
+  }
+  else if ($_GET['action'] == 'userList') {
+    if (isset($_SESSION['role'])) {
+      if ($_SESSION['role'] == 'admin') {
+        userList($managerUser);
+      } else {
+        echo "Vous n'avez pas accès à cette page";
+      }
+    } else {
+      echo "Vous n'avez pas accès à cette page";
+    }
+  }
+  else if ($_GET['action'] == 'userDetails') {
+    if (isset($_SESSION['role'])) {
+      if ($_SESSION['role'] == 'admin') {
+        userDetails($managerUser);
+      } else {
+        echo "Vous n'avez pas accès à cette page";
+      }
+    } else {
+      echo "Vous n'avez pas accès à cette page";
+    }
+  }
+  else if ($_GET['action'] == 'corbeille') {
+    if (isset($_SESSION['role'])) {
+      if ($_SESSION['role'] == 'admin') {
+        corbeille($manager);
+      } else {
+        echo "Vous n'avez pas accès à cette page";
+      }
+    } else {
+      echo "Vous n'avez pas accès à cette page";
+    }
+  }
+  else if ($_GET['action'] == 'billetListeAdmin') {
+    if (isset($_SESSION['role'])) {
+      if ($_SESSION['role'] == 'admin') {
+        billetListeAdmin($manager);
+      } else {
+        echo "Vous n'avez pas accès à cette page";
+      }
+    } else {
+      echo "Vous n'avez pas accès à cette page";
+    }
+  }
+  else if ($_GET['action'] == 'billetAdd') {
+    if (isset($_SESSION['role'])) {
+      if ($_SESSION['role'] == 'admin') {
+        billetAdd($manager);
+      } else {
+        echo "Vous n'avez pas accès à cette page";
+      }
+    } else {
+      echo "Vous n'avez pas accès à cette page";
+    }
+  }
+  else if ($_GET['action'] == 'billetEdit') {
+    if (isset($_SESSION['role'])) {
+      if ($_SESSION['role'] == 'admin') {
+        billetEdit($manager);
+      } else {
+        echo "Vous n'avez pas accès à cette page";
+      }
+    } else {
+      echo "Vous n'avez pas accès à cette page";
+    }
+  }
 }
-
-if (isset($_POST['idCommentaire']))
-{
-  $signalement = new Signalement(
-    [
-      'idCommentaire' => htmlspecialchars($_POST['idCommentaire']),
-      'idAuteur' => htmlspecialchars($_SESSION['id']),
-      'idBillet' => htmlspecialchars($_GET['id']),
-      'idSignale' => htmlspecialchars($_POST['idCommentaireAuteur'])
-    ]
-  );
-    $managerSignalement->add($signalement);
+else {
+  listeBillets($manager,$managerCom,$managerUser,$managerSignalement);
 }
-
-
-
-include('../blog/view/frontend/indexView.php');
 
 ?>

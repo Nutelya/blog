@@ -13,8 +13,6 @@
         <?php
         if (isset($_GET['id']))
         {
-          $billet = $manager->getUnique((int) $_GET['id']);
-
           echo '<div id="',$billet->id(),'" class="blog-post">',
                '<h2 class="blog-post-title">', $billet->title(), '</h2>', "\n",
                '<p class="blog-post-meta"> Le ', $billet->dateAdd()->format('d/m/Y à H\hi'), '</p>', "\n",
@@ -55,31 +53,23 @@
         }
         else
         {
-          if (isset($_GET['page'])) {
-            $fin = (htmlspecialchars($_GET['page']) * 5);
-            $début = ($fin - 5);
-          }
-          else {
-            $début = 0;
-            $fin = 5;
-          }
-          foreach ($manager->getList($début, $fin) as $billet)
+          foreach ($billetPagination as $billet2)
           {
-            if (strlen($billet->container()) <= 360)
+            if (strlen($billet2->container()) <= 360)
             {
-              $container = $billet->container();
+              $container = $billet2->container();
             }
 
             else
             {
-              $debut = substr($billet->container(), 0, 360);
+              $debut = substr($billet2->container(), 0, 360);
               $debut = substr($debut, 0, strrpos($debut, ' ')) . '...';
 
               $container = $debut;
             }
 
             echo '<div class="blog-post">',
-                 '<h2 class="blog-post-title"><a href="?id=', $billet->id(), '">', $billet->title(), '</a></h2>', "\n",
+                 '<h2 class="blog-post-title"><a href="?id=', $billet2->id(), '">', $billet2->title(), '</a></h2>', "\n",
                  '<p>', nl2br($container), '</p>',
                  '</div>';
           }
@@ -89,16 +79,12 @@
 <nav>
   <ul class="pager">
   <?php
-  $page =(($manager->count() - ($manager->count() % 5)) / 5);
-  if (($manager->count() % 5) != 0) {
-    $page = $page + 1;
-  }
   if (isset($_GET['page'])) {
     if ($_GET['page'] == $page) {
       echo '<li><a href="index.php?page=' . (htmlspecialchars($_GET['page']) - 1) .'">Précédant</a></li>';
     }
     else if ($_GET['page'] == 1) {
-      echo '<li><a href="index.php?page=' . (htmlspecialchars($_GET['page']) + 1) .'">Suivant</a></li>';
+      echo '<li><a href="index.php?page=2">Suivant</a></li>';
     }
     else {
       echo '<li><a href="index.php?page=' . (htmlspecialchars($_GET['page']) - 1) .'">Précédant</a></li>',

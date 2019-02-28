@@ -12,7 +12,7 @@
           <div class="card mb-3">
             <div class="card-header">
               <i class="fas fa-table"></i>
-              <?php echo 'Auteur : <a href="#">' . $managerU->getUnique($commentaire->idAuteur())->pseudo() . '</a>'; ?>
+              <?php echo 'Auteur : <a href="#">' . $managerUser->getUnique($commentaire->idAuteur())->pseudo() . '</a>'; ?>
             </div>
             <div class="card-header">
               <i class="fas fa-table"></i>
@@ -28,7 +28,7 @@
              ?>
             <div class="card-body">
               <div class="table-responsive">
-                <form id="get-data-form" action="commentaireDetails.php?id=<?php echo $commentaire->id() ?>" method="post">
+                <form id="get-data-form" action="../blog/index.php?action=commentaireDetails&id=<?php echo $commentaire->id() ?>" method="post">
                   <input type="hidden" name="idC" value="<?php echo $commentaire->id(); ?>" />
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
@@ -58,7 +58,7 @@
                           if ($compteur > 1) {
                             echo '<tr>';
                           }
-                          echo '<td><a href="#">',$managerU->getUnique($signalement->idAuteur())->pseudo(),'</a></td><td>', $signalement->dateAjout()->format('d/m/Y à H\hi'),'</td><td><a href="?id='.$commentaire->id().'&del='.$signalement->id().'">Supprimer signalement" <a/></td></tr>';
+                          echo '<td><a href="#">',$managerUser->getUnique($signalement->idAuteur())->pseudo(),'</a></td><td>', $signalement->dateAjout()->format('d/m/Y à H\hi'),'</td><td><a href="?action=commentaireDetails&id='.$commentaire->id().'&del='.$signalement->id().'">Supprimer signalement" <a/></td></tr>';
                         }
                       }
                        ?>
@@ -82,4 +82,4 @@
       </div>
     </div>
 <?php $content = ob_get_clean(); ?>
-<?php require('../template/templateAdmin.php'); ?>
+<?php require('../blog/template/templateAdmin.php'); ?>

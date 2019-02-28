@@ -36,16 +36,18 @@
         <nav class="blog-nav">
           <a class="blog-nav-item active" href="/blog/index.php">Accueil</a>
           <?php
-          if (isset($_SESSION['id']) AND isset($_SESSION['pseudo']))
+          if (isset($_SESSION['id']) AND isset($_SESSION['pseudo']) AND isset($_SESSION['role']))
           {
-              echo '<a class="blog-nav-item" href="/blog/controller/compte.php">Profil</a>
-              <a class="blog-nav-item" href="/blog/controller/admin.php">Administration</a>
-              <a class="blog-nav-item" href="/blog/controller/disconnect.php">Déconnexion</a>';
+              echo '<a class="blog-nav-item" href="/blog/index?action=profil">Profil</a>
+              <a class="blog-nav-item" href="/blog/index?action=disconnect">Déconnexion</a>';
+              if ($_SESSION['role'] == 'admin') {
+                echo '<a class="blog-nav-item" href="/blog/index.php?action=dashboard">Administration</a>';
+              }
           }
           else
           {
-            echo '<a class="blog-nav-item" href="/blog/controller/registration.php">Inscription</a>
-            <a class="blog-nav-item" href="/blog/controller/login.php">Connexion</a>';
+            echo '<a class="blog-nav-item" href="/blog/index.php?action=register">Inscription</a>
+            <a class="blog-nav-item" href="/blog/index?action=login">Connexion</a>';
           }
           ?>
         </nav>
@@ -61,8 +63,8 @@
       <h4>Chapitres</h4>
       <ol class="list-unstyled">
         <?php
-        foreach ($manager->getList() as $billet) {
-          echo '<li><a href="index.php?id='.$billet->id().'">'.$billet->title().'</a></li>';
+        foreach ($listeBillet as $billet4) {
+          echo '<li><a href="index.php?id='.$billet4->id().'">'.$billet4->title().'</a></li>';
         }
         ?>
       </ol>

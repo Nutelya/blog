@@ -19,19 +19,19 @@
                     <i class="fas fa-fw fa-comment-alt"></i>
                   </div>
                   <?php echo '<div class="mr-5">';
-                  if ($managerCom->countNew() == 0){
+                  if ($NbNewCom == 0){
                     echo "Aucun nouveau commentaire";
                   }
-                  else if ($managerCom->countNew() == 1) {
-                    echo $managerCom->countNew(). ' nouveau commentaire !';
+                  else if ($NbNewCom == 1) {
+                    echo $NbNewCom. ' nouveau commentaire !';
                   }
                   else {
-                    echo $managerCom->countNew(). ' nouveaux commentaires !';
+                    echo $NbNewCom. ' nouveaux commentaires !';
                   }
                   echo '</div>';
                   ?>
                 </div>
-                <a class="card-footer text-white clearfix small z-1" href="commentaireList.php">
+                <a class="card-footer text-white clearfix small z-1" href="../blog/index.php?action=commentaireListe">
                   <span class="float-left">Détails</span>
                   <span class="float-right">
                     <i class="fas fa-angle-right"></i>
@@ -46,19 +46,19 @@
                     <i class="fas fa-fw fa-flag"></i>
                   </div>
                   <?php echo '<div class="mr-5">';
-                  if ($managerSignalement->countNew() == 0){
+                  if ($NbNewSign == 0){
                     echo "Aucun nouveau signalement";
                   }
-                  else if ($managerSignalement->countNew() == 1) {
-                    echo $managerSignalement->countNew(). ' nouveau signalement !';
+                  else if ($NbNewSign == 1) {
+                    echo $NbNewSign. ' nouveau signalement !';
                   }
                   else {
-                    echo $managerSignalement->countNew(). ' nouveaux signalements !';
+                    echo $NbNewSign. ' nouveaux signalements !';
                   }
                   echo '</div>';
                   ?>
                 </div>
-                <a class="card-footer text-white clearfix small z-1" href="signalementList.php">
+                <a class="card-footer text-white clearfix small z-1" href="../blog/index.php?action=signalementListe">
                   <span class="float-left">Détails</span>
                   <span class="float-right">
                     <i class="fas fa-angle-right"></i>
@@ -71,4 +71,4 @@
     </div>
         <!-- /.container-fluid -->
 <?php $content = ob_get_clean(); ?>
-<?php require('../template/templateAdmin.php'); ?>
+<?php require('../blog/template/templateAdmin.php'); ?>

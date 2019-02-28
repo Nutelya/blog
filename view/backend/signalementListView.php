@@ -30,16 +30,16 @@
                   </thead>
                   <tbody>
                     <?php
-                    foreach ($managerS->getList() as $signalement)
+                    foreach ($listeSignalement as $signalement)
                     {
-                      if (strlen($manager->getUnique($signalement->idCommentaire())->contenu()) <= 50)
+                      if (strlen($managerCom->getUnique($signalement->idCommentaire())->contenu()) <= 50)
                       {
-                        $contenu = $manager->getUnique($signalement->idCommentaire())->contenu();
+                        $contenu = $managerCom->getUnique($signalement->idCommentaire())->contenu();
                       }
 
                       else
                       {
-                        $debut = substr($manager->getUnique($signalement->idCommentaire())->contenu(), 0, 50);
+                        $debut = substr($managerCom->getUnique($signalement->idCommentaire())->contenu(), 0, 50);
                         $debut = substr($debut, 0, strrpos($debut, ' ')) . '...';
                         $contenu = $debut;
                       }
@@ -49,7 +49,7 @@
                       } else {
                         echo '<td> <span style="font-size: 1.5em; color: grey;">';
                       }
-                      echo '<i class="fas fa-flag"></i></span></td><td><a href="../index.php?id=',$signalement->idBillet(),'#com',$signalement->idCommentaire(),'">', $contenu , '</a></td><td>', $managerU->getUnique($signalement->idAuteur())->pseudo(), '</td><td>', $signalement->dateAjout()->format('d/m/Y à H\hi'), '</td><td><a href="../controller/commentaireDetails.php?id=', $signalement->idCommentaire(), '">Détails</a></td></tr>', "\n";
+                      echo '<i class="fas fa-flag"></i></span></td><td><a href="../blog/index.php?id=',$signalement->idBillet(),'#com',$signalement->idCommentaire(),'">', $contenu , '</a></td><td>', $managerUser->getUnique($signalement->idAuteur())->pseudo(), '</td><td>', $signalement->dateAjout()->format('d/m/Y à H\hi'), '</td><td><a href="../blog/index.php?action=commentaireDetails&id=', $signalement->idCommentaire(), '">Détails</a></td></tr>', "\n";
                     }
                     ?>
                   </tbody>
@@ -61,4 +61,4 @@
       </div>
     </div>
 <?php $content = ob_get_clean(); ?>
-<?php require('../template/templateAdmin.php'); ?>
+<?php require('../blog/template/templateAdmin.php'); ?>

@@ -27,9 +27,9 @@
                   </thead>
                   <tbody>
                     <?php
-                    foreach ($manager->getList(-1,-1,1) as $billet)
+                    foreach ($corbeille as $billet)
                     {
-                      echo '<tr><td>', $billet->title(), '</td><td>', $billet->dateAdd()->format('d/m/Y à H\hi'), '</td><td>', ($billet->dateAdd() == $billet->dateEdit() ? '-' : $billet->dateEdit()->format('d/m/Y à H\hi')), '</td><td><a href="../controller/corbeille.php?retablir=', $billet->id(), '">Rétablir</a> | <a href="?supprimer=', $billet->id(), '">Supprimer</a></td></tr>', "\n";
+                      echo '<tr><td>', $billet->title(), '</td><td>', $billet->dateAdd()->format('d/m/Y à H\hi'), '</td><td>', ($billet->dateAdd() == $billet->dateEdit() ? '-' : $billet->dateEdit()->format('d/m/Y à H\hi')), '</td><td><a href="?action=corbeille&retablir=', $billet->id(), '">Rétablir</a> | <a href="?action=corbeille&supprimer=', $billet->id(), '">Supprimer</a></td></tr>', "\n";
                     }
                     ?>
                   </tbody>
@@ -42,4 +42,4 @@
     </div>
   </div>
 <?php $content = ob_get_clean(); ?>
-<?php require('../template/templateAdmin.php'); ?>
+<?php require('../blog/template/templateAdmin.php'); ?>
