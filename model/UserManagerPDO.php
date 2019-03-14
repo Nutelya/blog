@@ -195,7 +195,7 @@ if ($resultat)
 {
     if ($isPasswordCorrect) {
         session_start();
-        $_SESSION['id'] = $resultat['id'];
+        $_SESSION['id']  = $resultat['id'];
         $_SESSION['pseudo'] = $pseudo;
 				$_SESSION['role'] = $resultat['role'];
     }

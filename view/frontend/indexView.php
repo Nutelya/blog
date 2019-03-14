@@ -3,7 +3,7 @@
 <div class="container">
   <div class="blog-header">
     <h1 class="blog-title">Blog de Jean Forteroche</h1>
-    <p class="lead blog-description">Le livre de Jean Forteroche</p>
+    <p class="lead blog-description"><em><u>Billet simple pour l'Alaska</em></u></p>
   </div>
 
   <div class="row">
@@ -42,13 +42,14 @@
           echo '</br>',
                '<form id="commentary" action="index.php?id=',$billet->id(),'" method="post">',
                '<h4>Publier un commentaire</h4>',
-               '<textarea rows="8" cols="60" name="comment"></textarea>',
+               '<textarea id="commentaires" class="col-sm-12" rows="6" name="comment"></textarea>',
+               '</br>',
                '<input type="submit" value="Valider" />',
                '</form>';
           }
           else {
             echo 'Vous devez être connecté pour publier un commentaire',
-                 '</br><a href="../blog/controller/login.php">Se connecter</a>';
+                 '</br><a href="../blog/index.php?action=login">Se connecter</a>';
           }
         }
         else

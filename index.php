@@ -1,6 +1,5 @@
 <?php
-
-require('/controller/controller.php');
+require('../blog/controller/controller.php');
 session_start();
 if (isset($_GET['action'])) {
   if ($_GET['action'] == 'listeBillets') {
@@ -153,5 +152,4 @@ if (isset($_GET['action'])) {
 else {
   listeBillets($manager,$managerCom,$managerUser,$managerSignalement);
 }
-
 ?>

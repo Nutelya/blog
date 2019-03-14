@@ -1,7 +1,7 @@
 <?php
-require 'model/autoload.php';
+require '../blog/model/autoload.php';
 $db = DBFactory::getMysqlConnexionWithPDO();
-$manager = new billetManagerPDO($db);
+$manager = new BilletManagerPDO($db);
 $managerCom = new CommentaireManagerPDO($db);
 $managerUser = new UserManagerPDO($db);
 $managerSignalement = new SignalementManagerPDO($db);
