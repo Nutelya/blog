@@ -1,10 +1,11 @@
 <?php
-require '../blog/model/autoload.php';
-$db = DBFactory::getMysqlConnexionWithPDO();
-$manager = new BilletManagerPDO($db);
-$managerCom = new CommentaireManagerPDO($db);
-$managerUser = new UserManagerPDO($db);
-$managerSignalement = new SignalementManagerPDO($db);
+namespace blog\controller;
+
+$db = \blog\model\Dbfactory::getMysqlConnexionWithPDO();
+$manager = new \blog\model\BilletManagerPDO($db);
+$managerCom = new \blog\model\CommentaireManagerPDO($db);
+$managerUser = new \blog\model\UserManagerPDO($db);
+$managerSignalement = new \blog\model\SignalementManagerPDO($db);
 
 
 function listeBillets($manager,$managerCom,$managerUser,$managerSignalement) {
@@ -29,7 +30,7 @@ function listeBillets($manager,$managerCom,$managerUser,$managerSignalement) {
 
   if (isset($_POST['comment']))
   {
-    $commentaire = new Commentaire(
+    $commentaire = new \blog\model\Commentaire(
       [
         'contenu' => htmlspecialchars($_POST['comment']),
         'idAuteur' => htmlspecialchars($_SESSION['id']),
@@ -41,7 +42,7 @@ function listeBillets($manager,$managerCom,$managerUser,$managerSignalement) {
 
   if (isset($_POST['idCommentaire']))
   {
-    $signalement = new Signalement(
+    $signalement = new \blog\model\Signalement(
       [
         'idCommentaire' => htmlspecialchars($_POST['idCommentaire']),
         'idAuteur' => htmlspecialchars($_SESSION['id']),
@@ -90,7 +91,7 @@ function register($managerUser) {
     {
       if ($_POST['password'] == $_POST['confirmPassword'])
       {
-        $user = new User(
+        $user = new \blog\model\User(
           [
             'pseudo' => htmlspecialchars($_POST['pseudo']),
             'email' => htmlspecialchars($_POST['email']),
@@ -154,7 +155,7 @@ function commentaireDetails($manager,$managerCom,$managerUser,$managerSignalemen
 
   if (isset($_POST['modifier']))
   {
-    $com = new Commentaire(
+    $com = new \blog\model\Commentaire(
       [
         'contenu' => htmlspecialchars($_POST['contenu']),
         'id' => htmlspecialchars($_POST['idC'])
@@ -239,7 +240,7 @@ function billetAdd($manager) {
   {
     if (!empty($_POST['titre']) && !empty($_POST['contenu']))
     {
-    $billet = new Billet(
+    $billet = new \blog\model\Billet(
       [
         'title' => htmlspecialchars($_POST['titre']),
         'container' => $_POST['contenu']
@@ -259,7 +260,7 @@ function billetEdit($manager) {
   }
   if (isset($_POST['titre']))
   {
-    $billet = new Billet(
+    $billet = new \blog\model\Billet(
       [
         'title' => htmlspecialchars($_POST['titre']),
         'container' => $_POST['contenu']
@@ -273,4 +274,13 @@ function billetEdit($manager) {
   }
   require('../blog/view/backend/billetEditView.php');
 }
+
+function erreurPage() {
+  require('../blog/view/frontend/erreur.php');
+}
+
+function mdpOublie($managerUser) {
+  require('../blog/view/frontend/mdpOublie.php');
+}
+
 ?>
