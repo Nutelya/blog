@@ -73,28 +73,91 @@ class UserManagerPDO {
 		return $resultat;
 	}
 
-
-	/**
-	 * @access protected
-	 * @param string $password
-	 * @return void
-	 */
-
-	protected final  function updatePassword($password) {
-
+	public final function verifyUser($pseudo,$email) {
+		$sql = 'SELECT id, pseudo, password, email, date_register FROM utilisateur WHERE pseudo = :pseudo AND email = :email';
+		$request = $this->db->prepare($sql);
+		$request->bindValue(':pseudo',$pseudo);
+		$request->bindValue(':email',$email);
+		$test = $request->execute();
+		$request->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, '\blog\model\User');
+		$test = $request->fetchAll();
+		if (empty($test)) {
+			$resultat = false;
+		} else {
+			$resultat = true;
+		}
+		return $resultat;
 	}
 
-
-	/**
-	 * @access protected
-	 * @param string $email
-	 * @return void
-	 */
-
-	protected final  function updateEmail($email) {
-
+	public final function changeMdp($email,$password='') {
+		$request = $this->db->prepare('UPDATE utilisateur SET password = :password WHERE email = :email');
+		if ($password == '') {
+			$length = rand(8,10);
+			$chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			$password = '';
+	    for($i=0; $i<$length; $i++) {
+	        $password .= $chars[rand(0, strlen($chars)-1)];
+	    }
+		}
+		$password_hache = password_hash($password, PASSWORD_DEFAULT);
+		$request->bindValue(':password', $password_hache);
+		$request->bindValue(':email', $email);
+		$request->execute();
+		return $password;
 	}
 
+	public final function emailMdp($email,$password) {
+		if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $email)) // On filtre les serveurs qui rencontrent des bogues.
+			{
+				$passage_ligne = "\r\n";
+			} else {
+				$passage_ligne = "\n";
+			}
+//=====Déclaration des messages au format texte et au format HTML.
+$message_txt = "Bonjour,
+Cet email a été envoyé suite à une demande de récupération de mot de passe.
+Voici votre nouveau mot de passe : ". $password;
+$message_html = "<html><head></head><body><b>Bonjour</b>,<br> Cet email a été envoyé suite à une demande de récupération de mot de passe.
+<br>Voici votre nouveau mot de passe : ". $password ."</body></html>";
+//==========
+
+//=====Création de la boundary
+$boundary = "-----=".md5(rand());
+//==========
+
+//=====Définition du sujet.
+$sujet = "Réinitialisation du mot de passe";
+//=========
+
+//=====Création du header de l'e-mail.
+$header = "From: \"Support\" <support@salucin.ovh>".$passage_ligne;
+$header.= "Reply-to: \"Test\" <".$email.">".$passage_ligne;
+$header.= "MIME-Version: 1.0".$passage_ligne;
+$header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
+//==========
+
+//=====Création du message.
+$message = $passage_ligne."--".$boundary.$passage_ligne;
+//=====Ajout du message au format texte.
+$message.= "Content-Type: text/plain; charset=\"ISO-8859-1\"".$passage_ligne;
+$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+$message.= $passage_ligne.$message_txt.$passage_ligne;
+//==========
+$message.= $passage_ligne."--".$boundary.$passage_ligne;
+//=====Ajout du message au format HTML
+$message.= "Content-Type: text/html; charset=\"ISO-8859-1\"".$passage_ligne;
+$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+$message.= $passage_ligne.$message_html.$passage_ligne;
+//==========
+$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
+$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
+//==========
+
+//=====Envoi de l'e-mail.
+mail($email,$sujet,$message,$header);
+//==========
+
+	}
 
 	/**
 	 * @access public
@@ -110,14 +173,6 @@ class UserManagerPDO {
 	}
 
 
-	/**
-	 * @access public
-	 * @return int
-	 */
-
-	public final  function count() {
-
-	}
 
 
 	/**
@@ -173,16 +228,6 @@ class UserManagerPDO {
 	}
 
 
-	/**
-	 * @access public
-	 * @param int $id
-	 * @return void
-	 */
-
-	public final  function updateRank($id) {
-
-	}
-
 	public final function connexion($pseudo, $password) {
 		//  Récupération de l'utilisateur et de son pass hashé
 $req = $this->db->prepare('SELECT id, password, role FROM utilisateur WHERE pseudo = :pseudo');
@@ -204,4 +249,5 @@ if ($resultat)
 }
 	}
 }
+
 ?>

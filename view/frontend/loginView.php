@@ -58,7 +58,7 @@
             <input type="submit" class="btn btn-primary btn-block"  value="Connexion" />
           </form>
           <div class="text-center">
-            <a class="d-block small mt-3" href="forgot-password.html">Mot de passe oublié?</a>
+            <a class="d-block small mt-3" href="../blog/index.php?action=mdpOublie">Mot de passe oublié?</a>
             <a class="d-block small mt-3" href="../blog/index.php?action=register">S'inscrire</a>
             <a class="d-block small mt-3" href="../blog/index.php">Retourner à l'accueil</a>
 

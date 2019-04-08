@@ -280,6 +280,15 @@ function erreurPage() {
 }
 
 function mdpOublie($managerUser) {
+  if (isset($_POST['pseudo']) && isset($_POST['email'])) {
+    if ($managerUser->verifyUser(htmlspecialchars($_POST['pseudo']),htmlspecialchars($_POST['email'])) == true) {
+      $newmdp = $managerUser->changeMdp($_POST['email']);
+      $managerUser->emailMdp(htmlspecialchars($_POST['email']),$newmdp);
+      $erreur = "Un nouveau mot de passe va vous être envoyé sur votre adresse Email."
+    } else {
+      $erreur = "Ce pseudo ou email n'existe pas.";
+    }
+  }
   require('../blog/view/frontend/mdpOublie.php');
 }
 
