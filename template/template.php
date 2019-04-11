@@ -14,7 +14,7 @@
     <link href="../blog/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../blog/public/css/blog.css" rel="stylesheet">
+    <link href="../blog/public/css/styleblog.css" rel="stylesheet">
     <link href="../blog/public/css/edit.css" rel="stylesheet">
 
   </head>
@@ -46,9 +46,10 @@
     <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
     <div class="sidebar-module sidebar-module-inset">
       <h4>À propos</h4>
-      <p>Jean Forteroche est un acteur et écrivain. Il a notamment publié les romans best sellers <em><u>L'étoile de l'Arizona</u></em> et <em><u>La galaxie destin</u></em>.</p>
+      <p>Jean Forteroche est un acteur et écrivain. Il a notamment publié les romans best sellers <em><u>L'étoile de l'Arizona</u></em> et <em><u>La galaxie des destins</u></em>.</p>
       <p>Il publie son nouveau roman <em><u>Billet simple pour l'Alaska</u></em> par épisode sur ce blog.</p>
     </div>
+    <hr>
     <div class="sidebar-module">
       <h4>Chapitres</h4>
       <ol class="list-unstyled">
@@ -68,9 +69,9 @@
 
 
     <footer class="blog-footer">
-      <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+      <p> Mentions légales </p>
       <p>
-        <a href="#">Back to top</a>
+        <a href="#">Retourner en haut</a>
       </p>
     </footer>
 

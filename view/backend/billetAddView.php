@@ -12,7 +12,7 @@
         <form id="get-data-form" action="../blog/index.php?action=billetAdd"  method="post">
           <div class="card mb-3">
             <div class="card-header">
-              <i class="fas fa-chart-area"></i>
+              <i class="fas fa-heading"></i>
               Titre : <input type="text" name="titre" id="titre" required/>
               <span id="aidetitre"></span>
             </div>

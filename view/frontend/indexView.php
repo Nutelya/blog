@@ -5,7 +5,7 @@
     <h1 class="blog-title">Blog de Jean Forteroche</h1>
     <p class="lead blog-description"><em><u>Billet simple pour l'Alaska</em></u></p>
   </div>
-
+<hr>
   <div class="row">
 
     <div class="col-sm-8 blog-main">
@@ -24,17 +24,22 @@
             echo '<p>Dernière modification le ', $billet->dateEdit()->format('d/m/Y à H\hi'), '</p>';
           }
           echo '<h2 class="blog-post-title">Commentaires</h2>', "\n";
-          foreach ($managerCom->getListCom(0, 10, $billet->id()) as $commentaire)
+          foreach ($managerCom->getListCom(-1, -1, $billet->id()) as $commentaire)
           {
-            echo '<p id="com',$commentaire->id(),'">',$managerUser->getUnique($commentaire->idAuteur())->pseudo(),' - ',$managerUser->getUnique($commentaire->idAuteur())->role(),' - ',$commentaire->dateAjout()->format('d/m/Y à H\hi'),'</p>',
-                 '<blockquote>',nl2br($commentaire->contenu()), '</blockquote>',
-                 '</br>';
+            echo '<div class="panel panel-info">',
+                  '<div class="panel-heading" id="com',$commentaire->id(),'"><h3 class="panel-title">',$managerUser->getUnique($commentaire->idAuteur())->pseudo(),' - ',$managerUser->getUnique($commentaire->idAuteur())->role(),' - ',$commentaire->dateAjout()->format('d/m/Y à H\hi'),'</h3>',
+                  '</div>',
+                  '<div class="panel-body">',
+                   nl2br($commentaire->contenu()),
+                  '</div>',
+                  '</div>';
                  if (isset($_SESSION['id']) AND isset($_SESSION['pseudo']) AND $managerSignalement->peutSignaler($_SESSION['id'], $commentaire->id())) {
                    echo '<form action="index.php?id=',$billet->id(),'" method="post">',
                    '<input type="hidden" name="idCommentaire" value="',$commentaire->id(),'"/>',
                    '<input type="hidden" name="idCommentaireAuteur" value="',$commentaire->idAuteur(),'"/>',
-                   '<input type="submit" value="Signaler" />',
-                   '</form>';
+                   '<input class="btn btn-sm btn-danger" type="submit" value="Signaler" />',
+                   '</form>',
+                   '<br>';
                  }
           }
           if (isset($_SESSION['id']) AND isset($_SESSION['pseudo']))

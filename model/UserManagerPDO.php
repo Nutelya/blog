@@ -73,12 +73,12 @@ class UserManagerPDO {
 		return $resultat;
 	}
 
-	public final function verifyUser($pseudo,$email) {
+	public final function verifyUser(User $user) {
 		$sql = 'SELECT id, pseudo, password, email, date_register FROM utilisateur WHERE pseudo = :pseudo AND email = :email';
 		$request = $this->db->prepare($sql);
-		$request->bindValue(':pseudo',$pseudo);
-		$request->bindValue(':email',$email);
-		$test = $request->execute();
+		$request->bindValue(':pseudo',$user->pseudo());
+		$request->bindValue(':email',$user->email());
+		$request->execute();
 		$request->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, '\blog\model\User');
 		$test = $request->fetchAll();
 		if (empty($test)) {
@@ -89,25 +89,27 @@ class UserManagerPDO {
 		return $resultat;
 	}
 
-	public final function changeMdp($email,$password='') {
-		$request = $this->db->prepare('UPDATE utilisateur SET password = :password WHERE email = :email');
-		if ($password == '') {
-			$length = rand(8,10);
+	public final function changeMdp(User $user) {
+		if ($user->password() == '') {
+			$length = rand(8,12);
 			$chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 			$password = '';
 	    for($i=0; $i<$length; $i++) {
 	        $password .= $chars[rand(0, strlen($chars)-1)];
 	    }
+			$user->setPassword($password);
 		}
-		$password_hache = password_hash($password, PASSWORD_DEFAULT);
+		$request = $this->db->prepare('UPDATE utilisateur SET password = :password WHERE email = :email AND pseudo = :pseudo');
+		$password_hache = password_hash($user->password(), PASSWORD_DEFAULT);
 		$request->bindValue(':password', $password_hache);
-		$request->bindValue(':email', $email);
+		$request->bindValue(':pseudo', $user->pseudo());
+		$request->bindValue(':email', $user->email());
 		$request->execute();
-		return $password;
+		return $user->password();
 	}
 
-	public final function emailMdp($email,$password) {
-		if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $email)) // On filtre les serveurs qui rencontrent des bogues.
+	public final function emailMdp(User $user) {
+		if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $user->email())) // On filtre les serveurs qui rencontrent des bogues.
 			{
 				$passage_ligne = "\r\n";
 			} else {
@@ -115,10 +117,10 @@ class UserManagerPDO {
 			}
 //=====Déclaration des messages au format texte et au format HTML.
 $message_txt = "Bonjour,
-Cet email a été envoyé suite à une demande de récupération de mot de passe.
-Voici votre nouveau mot de passe : ". $password;
-$message_html = "<html><head></head><body><b>Bonjour</b>,<br> Cet email a été envoyé suite à une demande de récupération de mot de passe.
-<br>Voici votre nouveau mot de passe : ". $password ."</body></html>";
+Cet email a été envoyé car votre mot de passe a été changé.
+Voici votre nouveau mot de passe : ". $user->password();
+$message_html = "<html><head></head><body><b>Bonjour</b>,<br> Cet email a été envoyé car votre mot de passe a été changé.
+<br>Voici votre nouveau mot de passe : ". $user->password() ."</body></html>";
 //==========
 
 //=====Création de la boundary
@@ -131,7 +133,7 @@ $sujet = "Réinitialisation du mot de passe";
 
 //=====Création du header de l'e-mail.
 $header = "From: \"Support\" <support@salucin.ovh>".$passage_ligne;
-$header.= "Reply-to: \"Test\" <".$email.">".$passage_ligne;
+$header.= "Reply-to: \"Test\" <".$user->email().">".$passage_ligne;
 $header.= "MIME-Version: 1.0".$passage_ligne;
 $header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
 //==========
@@ -154,7 +156,7 @@ $message.= $passage_ligne."--".$boundary."--".$passage_ligne;
 //==========
 
 //=====Envoi de l'e-mail.
-mail($email,$sujet,$message,$header);
+mail($user->email(),$sujet,$message,$header);
 //==========
 
 	}
@@ -228,22 +230,22 @@ mail($email,$sujet,$message,$header);
 	}
 
 
-	public final function connexion($pseudo, $password) {
+	public final function connexion(User $user) {
 		//  Récupération de l'utilisateur et de son pass hashé
 $req = $this->db->prepare('SELECT id, password, role FROM utilisateur WHERE pseudo = :pseudo');
 $req->execute(array(
-    ':pseudo' => $pseudo));
+    ':pseudo' => $user->pseudo()));
 $resultat = $req->fetch();
 
 // Comparaison du pass envoyé via le formulaire avec la base
-$isPasswordCorrect = password_verify($password, $resultat['password']);
+$isPasswordCorrect = password_verify($user->password(), $resultat['password']);
 
 if ($resultat)
 {
     if ($isPasswordCorrect) {
         session_start();
         $_SESSION['id']  = $resultat['id'];
-        $_SESSION['pseudo'] = $pseudo;
+        $_SESSION['pseudo'] = $user->pseudo();
 				$_SESSION['role'] = $resultat['role'];
     }
 }

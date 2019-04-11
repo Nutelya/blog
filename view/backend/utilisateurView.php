@@ -11,14 +11,35 @@
         </ol>
           <div class="card mb-3">
             <div class="card-header">
-              <i class="fas fa-table"></i>
+              <i class="fas fa-user"></i>
               Informations
             </div>
             <div class="card-body">
-              <p>Pseudo : <?php echo $utilisateur->pseudo();?></p>
-              <p>Email : <?php echo $utilisateur->email();?></p>
-              <p>Role : <?php echo $utilisateur->role();?></p>
-              <p>Date d'inscription : <?php echo $utilisateur->date_register()->format('d/m/Y');?></p>
+              <table class="table table-condensed">
+                <thead>
+                  <tr>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Pseudo : <?php echo $utilisateur->pseudo();?></td>
+
+                  </tr>
+                  <tr>
+                    <td>Email : <?php echo $utilisateur->email();?></td>
+
+                  </tr>
+                  <tr>
+                    <td>Rôle : <?php echo $utilisateur->role();?></td>
+
+                  </tr>
+                  <tr>
+                    <td>Date d'inscription : <?php echo $utilisateur->date_register()->format('d/m/Y');?></td>
+
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

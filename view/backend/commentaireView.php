@@ -11,17 +11,17 @@
         </ol>
           <div class="card mb-3">
             <div class="card-header">
-              <i class="fas fa-table"></i>
+              <i class="fas fa-user"></i>
               <?php echo 'Auteur : <a href="#">' . $managerUser->getUnique($commentaire->idAuteur())->pseudo() . '</a>'; ?>
             </div>
             <div class="card-header">
-              <i class="fas fa-table"></i>
+              <i class="fas fa-clock"></i>
               <?php echo 'Publié le : ' . $commentaire->dateAjout()->format('d/m/Y à H\hi'); ?>
             </div>
             <?php
             if (!empty($signals)) {
               echo '<div class="card-header">',
-                   '<i class="fas fa-table"></i>',
+                   '<i class="fas fa-flag"></i>',
                    ' Ce commentaire a été signalé ' . sizeof($signals) . ' fois !',
                    '</div>';
             }
@@ -58,7 +58,7 @@
                           if ($compteur > 1) {
                             echo '<tr>';
                           }
-                          echo '<td><a href="#">',$managerUser->getUnique($signalement->idAuteur())->pseudo(),'</a></td><td>', $signalement->dateAjout()->format('d/m/Y à H\hi'),'</td><td><a href="?action=commentaireDetails&id='.$commentaire->id().'&del='.$signalement->id().'">Supprimer signalement" <a/></td></tr>';
+                          echo '<td><a href="#">',$managerUser->getUnique($signalement->idAuteur())->pseudo(),'</a></td><td>', $signalement->dateAjout()->format('d/m/Y à H\hi'),'</td><td><a href="?action=commentaireDetails&id='.$commentaire->id().'&del='.$signalement->id().'">Supprimer signalement <a/></td></tr>';
                         }
                       }
                        ?>

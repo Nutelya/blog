@@ -12,7 +12,7 @@
         <form id="get-data-form" action="?action=billetEdit" method="post">
           <div class="card mb-3">
             <div class="card-header">
-              <i class="fas fa-chart-area"></i>
+              <i class="fas fa-heading"></i>
               Titre : <input type="text" name="titre" value="<?php if (isset($billet)) echo $billet->title(); ?>" />
             </div>
             <div class="card-body">

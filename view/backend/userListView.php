@@ -11,7 +11,7 @@
         </ol>
           <div class="card mb-3">
             <div class="card-header">
-              <i class="fas fa-table"></i>
+              <i class="fas fa-address-book"></i>
               Liste des Utilisateurs
             </div>
             <div class="card-body">

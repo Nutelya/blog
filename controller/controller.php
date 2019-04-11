@@ -59,6 +59,29 @@ function listeBillets($manager,$managerCom,$managerUser,$managerSignalement) {
 function profil($manager,$managerCom,$managerUser,$managerSignalement) {
     $listeBillet = $manager->getList();
     $utilisateur = $managerUser->getUnique((int) $_SESSION['id']);
+    if (isset($_POST['password']) && isset($_POST['passwordNew']) && isset($_POST['passwordConf'])) {
+      if (password_verify($_POST['password'], $utilisateur->password())) {
+        if (strlen($_POST['passwordNew']) > 6) {
+          if ($_POST['passwordNew'] == $_POST['passwordConf']) {
+            $user = new \blog\model\User(
+              [
+                'pseudo' => $utilisateur->pseudo(),
+                'email' => $utilisateur->email(),
+                'password' => htmlspecialchars($_POST['passwordNew'])
+              ]
+            );
+            $managerUser->changeMdp($user);
+            $managerUser->emailMdp($user);
+          } else {
+            $erreur = "Le nouveau mot de passe et la confirmation du mot de passe sont différents";
+          }
+        } else {
+          $erreur = "Le nouveau mot de passe n'est pas assez long";
+        }
+      } else {
+        $erreur = "Mauvais mot de passe";
+      }
+    }
 
   require('../blog/view/frontend/compteView.php');
 }
@@ -66,10 +89,16 @@ function profil($manager,$managerCom,$managerUser,$managerSignalement) {
 function login($managerUser) {
   if (isset($_POST['password']) AND isset($_POST['pseudo']))
   {
-    $managerUser->connexion(htmlspecialchars($_POST['pseudo']), htmlspecialchars($_POST['password']));
+    $user = new \blog\model\User(
+      [
+        'pseudo' => htmlspecialchars($_POST['pseudo']),
+        'password' => htmlspecialchars($_POST['password'])
+      ]
+    );
+    $managerUser->connexion($user);
     if (isset($_SESSION['id'])) {
       if (isset($_POST['souvenir']) && $_POST['souvenir'] == 'remember-me') {
-        setcookie('pseudo',htmlspecialchars($_POST['pseudo']));
+        setcookie('pseudo',htmlspecialchars($_POST['pseudo']),time()+604800);
       }
       else {
         setcookie('pseudo','',time() - 3600);
@@ -111,6 +140,7 @@ function register($managerUser) {
         } else
         {
           $managerUser->add($user);
+          setcookie('pseudo',htmlspecialchars($_POST['pseudo']),time()+604800);
           header ('location: ../blog/index.php');
         }
       }
@@ -135,7 +165,7 @@ function disconnect() {
 function dashboard($managerCom,$managerUser,$managerSignalement) {
   $NbNewCom = $managerCom->countNew();
   $NbNewSign = $managerSignalement->countNew();
-  include('../blog/view/backend/adminView.php');
+  require('../blog/view/backend/adminView.php');
 }
 
 function commentaireListe($manager,$managerCom,$managerUser) {
@@ -223,7 +253,7 @@ function corbeille($manager) {
     $manager->switchCorbeille((int) $_GET['retablir'], 0);
   }
   $corbeille = $manager->getList(-1,-1,1);
-  require('../blog/view/backend/CorbeilleView.php');
+  require('../blog/view/backend/corbeilleView.php');
 }
 
 function billetListeAdmin($manager) {
@@ -281,10 +311,17 @@ function erreurPage() {
 
 function mdpOublie($managerUser) {
   if (isset($_POST['pseudo']) && isset($_POST['email'])) {
-    if ($managerUser->verifyUser(htmlspecialchars($_POST['pseudo']),htmlspecialchars($_POST['email'])) == true) {
-      $newmdp = $managerUser->changeMdp($_POST['email']);
-      $managerUser->emailMdp(htmlspecialchars($_POST['email']),$newmdp);
-      $erreur = "Un nouveau mot de passe va vous être envoyé sur votre adresse Email."
+    $user = new \blog\model\User(
+      [
+        'pseudo' => htmlspecialchars($_POST['pseudo']),
+        'email' => htmlspecialchars($_POST['email']),
+        'password' => ''
+      ]
+    );
+    if ($managerUser->verifyUser($user) == true) {
+      $user->setPassword($managerUser->changeMdp($user));
+      $managerUser->emailMdp($user);
+      $erreur = "Un nouveau mot de passe a été envoyé sur votre adresse email.";
     } else {
       $erreur = "Ce pseudo ou email n'existe pas.";
     }
