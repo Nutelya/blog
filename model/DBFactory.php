@@ -1,6 +1,7 @@
 <?php
 namespace blog\model;
 use \PDO;
+
 class Dbfactory
 {
   public static function getMysqlConnexionWithPDO()
