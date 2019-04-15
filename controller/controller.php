@@ -72,6 +72,7 @@ function profil($manager,$managerCom,$managerUser,$managerSignalement) {
             );
             $managerUser->changeMdp($user);
             $managerUser->emailMdp($user);
+            $erreur = "Le mot de passe a été modifié.";
           } else {
             $erreur = "Le nouveau mot de passe et la confirmation du mot de passe sont différents";
           }

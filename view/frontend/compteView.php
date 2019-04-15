@@ -15,7 +15,7 @@
       <p>Email : <?php echo $utilisateur->email();?></p>
       <p>Role : <?php echo $utilisateur->role();?></p>
       <p>Date d'inscription : <?php echo $utilisateur->date_register()->format('d/m/Y');?></p>
-      <button type="button" class="btn btn-sm btn-primary">Changer le mot de passe</button>
+      <button id="mdp" type="button" class="btn btn-sm btn-primary">Changer le mot de passe</button>
       <hr>
       <form id="changermdp" action="../blog/index?action=profil" method="post">
           Mot de passe actuel : <input type="password" name="password" id="password" required/>
@@ -25,12 +25,13 @@
           Confirmation du mot de passe : <input type="password" name="passwordConf" id="passwordConf" required/>
           <br>
         <input type="submit" value="Valider"/>
+        <hr>
       </form>
 
       <?php if (isset($erreur)) {
         echo '</br><span class="erreur">'.$erreur.'</span>';
       } ?>
-      <hr>
+
     </div>
 
 <!-- /.blog-post -->
