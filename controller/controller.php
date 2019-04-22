@@ -80,7 +80,7 @@ function profil($manager,$managerCom,$managerUser,$managerSignalement)
             ]
           );
           $managerUser->changeMdp($user);
-          $managerUser->emailMdp($user);
+          //$managerUser->emailMdp($user);
           $erreur = "Le mot de passe a été modifié.";
         }
         else
@@ -360,8 +360,8 @@ function mdpOublie($managerUser)
     if ($managerUser->verifyUser($user) == true)
     {
       $user->setPassword($managerUser->changeMdp($user));
-      $managerUser->emailMdp($user);
-      $erreur = "Un nouveau mot de passe a été envoyé sur votre adresse email.";
+      //$managerUser->emailMdp($user);
+      $erreur = "Votre mot de passe a été réinitialisé. Votre nouveau mot de passe est : <b>".$user->password();"</b>.";
     }
     else
     {

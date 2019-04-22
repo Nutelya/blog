@@ -105,46 +105,46 @@ class UserManagerPDO
 		return $user->password();
 	}
 
-	public final function emailMdp(User $user)
-	{
-		if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $user->email())) // On filtre les serveurs qui rencontrent des bogues.
-			{
-				$passage_ligne = "\r\n";
-			}
-			else
-			{
-				$passage_ligne = "\n";
-			}
+//	public final function emailMdp(User $user)
+//	{
+//		if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $user->email()))
+//			{
+//				$passage_ligne = "\r\n";
+//			}
+//			else
+//		{
+//		$passage_ligne = "\n";
+//}
 
-		$message_txt = "Bonjour,
-											Cet email a été envoyé car votre mot de passe a été changé.
-											Voici votre nouveau mot de passe : ". $user->password();
-	  $message_html = "<html><head></head><body><b>Bonjour</b>,<br> Cet email a été envoyé car votre mot de passe a été changé.
-											<br>Voici votre nouveau mot de passe : ". $user->password() ."</body></html>";
-		$boundary = "-----=".md5(rand());
-		$sujet = "Réinitialisation du mot de passe";
-		$header = "From: \"Support\" <support@salucin.ovh>".$passage_ligne;
-		$header.= "Reply-to: \"Test\" <".$user->email().">".$passage_ligne;
-		$header.= "MIME-Version: 1.0".$passage_ligne;
-		$header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
+//		$message_txt = "Bonjour,
+//											Cet email a été envoyé car votre mot de passe a été changé.
+//											Voici votre nouveau mot de passe : ". $user->password();
+//	  $message_html = "<html><head></head><body><b>Bonjour</b>,<br> Cet email a été envoyé car votre mot de passe a été changé.
+//											<br>Voici votre nouveau mot de passe : ". $user->password() ."</body></html>";
+//		$boundary = "-----=".md5(rand());
+//		$sujet = "Réinitialisation du mot de passe";
+//		$header = "From: \"Support\" <support@salucin.ovh>".$passage_ligne;
+//		$header.= "Reply-to: \"Test\" <".$user->email().">".$passage_ligne;
+//		$header.= "MIME-Version: 1.0".$passage_ligne;
+//	$header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
 
-		$message = $passage_ligne."--".$boundary.$passage_ligne;
+//		$message = $passage_ligne."--".$boundary.$passage_ligne;
 
-		$message.= "Content-Type: text/plain; charset=\"ISO-8859-1\"".$passage_ligne;
-		$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
-		$message.= $passage_ligne.$message_txt.$passage_ligne;
+//		$message.= "Content-Type: text/plain; charset=\"ISO-8859-1\"".$passage_ligne;
+//	$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+//$message.= $passage_ligne.$message_txt.$passage_ligne;
 
-		$message.= $passage_ligne."--".$boundary.$passage_ligne;
+//$message.= $passage_ligne."--".$boundary.$passage_ligne;
 
-		$message.= "Content-Type: text/html; charset=\"ISO-8859-1\"".$passage_ligne;
-		$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
-		$message.= $passage_ligne.$message_html.$passage_ligne;
+//		$message.= "Content-Type: text/html; charset=\"ISO-8859-1\"".$passage_ligne;
+//		$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+//		$message.= $passage_ligne.$message_html.$passage_ligne;
 
-		$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
-		$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
+//		$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
+//		$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
 
-		mail($user->email(),$sujet,$message,$header);
-	}
+//		mail($user->email(),$sujet,$message,$header);
+//	}
 
 	public final  function delete($id)
 	{

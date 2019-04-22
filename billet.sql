@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 07 Mars 2019 à 12:11
+-- Généré le :  Lun 22 Avril 2019 à 13:30
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -73,8 +73,11 @@ CREATE TABLE `commentaire` (
 --
 
 INSERT INTO `commentaire` (`id`, `idBillet`, `idAuteur`, `contenu`, `dateAjout`, `dateEdit`, `estNouveau`) VALUES
-(48, 63, 4, 'sdqsddsq', '2019-02-27 13:51:54', '2019-02-27 13:51:54', 0),
-(49, 63, 4, 'sss', '2019-03-07 10:54:38', '2019-03-07 10:54:38', 0);
+(75, 63, 23, 'Je ne m\'attendais pas Ã  Ã§a !', '2019-04-22 15:06:29', '2019-04-22 15:06:29', 0),
+(76, 59, 23, 'Wow! Je suis trÃ¨s surpris par cette rÃ©vÃ©lation!', '2019-04-22 15:07:07', '2019-04-22 15:07:07', 0),
+(77, 63, 22, 'Moi aussi !', '2019-04-22 15:08:03', '2019-04-22 15:08:03', 0),
+(78, 62, 22, 'Non pourquoiiiiiiiiiiiiii', '2019-04-22 15:08:51', '2019-04-22 15:08:51', 1),
+(79, 60, 22, 'J\'ai bien aimÃ©', '2019-04-22 15:09:07', '2019-04-22 15:09:07', 0);
 
 -- --------------------------------------------------------
 
@@ -91,14 +94,6 @@ CREATE TABLE `signalement` (
   `estNouveau` tinyint(1) NOT NULL,
   `idSignale` int(5) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Contenu de la table `signalement`
---
-
-INSERT INTO `signalement` (`id`, `idBillet`, `idAuteur`, `idCommentaire`, `dateAjout`, `estNouveau`, `idSignale`) VALUES
-(54, 63, 4, 48, '2019-02-27 13:55:38', 0, 4),
-(55, 63, 4, 49, '2019-03-07 10:54:40', 0, 4);
 
 -- --------------------------------------------------------
 
@@ -120,10 +115,10 @@ CREATE TABLE `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`id`, `pseudo`, `password`, `email`, `date_register`, `role`) VALUES
-(9, 'salucin2', '$2y$10$sq05KN41B8oRyTygqg2MTezMok3PyT2LwKQPBxhH9.TOTxqklWksO', 'salucin@hotmail.fr', '2019-02-14 13:08:19', 'membre'),
-(4, 'Salucin', '$2y$10$D7pa4IH1R3FDmHSdYaS6ZuRcHpow0JWExCAmDQJxQlIWTcMPCAbYq', 'salucin@hotmail.fr', '2018-12-18 14:47:04', 'admin'),
-(14, 'salucin3', '$2y$10$LhcqkpACoJqUuOgOhgKdyOPui2GqNuopKav0LPCHdAghPjibXtM9G', 'salucin3@hotmail.fr', '2019-02-20 13:49:48', 'membre'),
-(15, 'salucin4', '$2y$10$ZYBfX.GMVOj.Vmtc8.EUqetGLvWOQ1pYnJJ4iLXvXw832VP0smf9W', 'salucin4@hotmail.fr', '2019-02-20 13:52:25', 'membre');
+(21, 'Pilyafen', '$2y$10$r0N9ZUgRga9KTw17Dnq6xuHIEwK8pWXrjw16m.wzr/7pRKC9e0mgS', 'pilyafen@gmail.com', '2019-04-22 15:04:41', 'membre'),
+(22, 'Bleu', '$2y$10$Yd6cHtX638J/eLAqAJUr6uFuav/FQwDSblZn2WSk0z2TkYLWptf4S', 'bleu@email.fr', '2019-04-22 15:05:07', 'membre'),
+(4, 'Salucin', '$2y$10$dd49o2LkfgGePtCUgtpSU.tj8yYaUKREFJk5N22vVLTadWvTH/aI6', 'salucin@hotmail.fr', '2018-12-18 14:47:04', 'admin'),
+(23, 'Vert', '$2y$10$9.HcAmENgiXTMHPuqvE31uYkWtyO17XuYXaLmeERWU7vcnqD/iFva', 'vert@email.fr', '2019-04-22 15:05:25', 'membre');
 
 --
 -- Index pour les tables exportées
@@ -161,22 +156,22 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `billet`
 --
 ALTER TABLE `billet`
-  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 --
 -- AUTO_INCREMENT pour la table `commentaire`
 --
 ALTER TABLE `commentaire`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 --
 -- AUTO_INCREMENT pour la table `signalement`
 --
 ALTER TABLE `signalement`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
