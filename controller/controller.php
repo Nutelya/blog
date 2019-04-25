@@ -148,7 +148,7 @@ function register($managerUser)
             'password' => htmlspecialchars($_POST['password'])
           ]
         );
-        if (($managerUser->verifyPseudo($user->pseudo()) == true) OR ($managerUser->verifyEmail($user->email()) == true))
+        if (($managerUser->verifyPseudo($user->pseudo()) == true) OR ($managerUser->verifyEmail($user->email()) == true) OR ($managerUser->emailCorrect($user) == true))
         {
           if ($managerUser->verifyPseudo($user->pseudo()) == true)
           {
@@ -157,6 +157,10 @@ function register($managerUser)
           if ($managerUser->verifyEmail($user->email()) == true)
           {
             $erreurEmail = 'Cet email est déjà utilisé.';
+          }
+          if ($managerUser->emailCorrect($user) == true)
+          {
+            $erreurEmail = "Cet email n'est pas valide";
           }
         }
         else

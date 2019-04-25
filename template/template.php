@@ -27,8 +27,8 @@
           <?php
           if (isset($_SESSION['id']) AND isset($_SESSION['pseudo']) AND isset($_SESSION['role']))
           {
-              echo '<a class="blog-nav-item" href="/blog/index?action=profil">Profil</a>
-              <a class="blog-nav-item" href="/blog/index?action=disconnect">Déconnexion</a>';
+              echo '<a class="blog-nav-item" href="/blog/index.php?action=profil">Profil</a>
+              <a class="blog-nav-item" href="/blog/index.php?action=disconnect">Déconnexion</a>';
               if ($_SESSION['role'] == 'admin') {
                 echo '<a class="blog-nav-item" href="/blog/index.php?action=dashboard">Administration</a>';
               }
@@ -36,7 +36,7 @@
           else
           {
             echo '<a class="blog-nav-item" href="/blog/index.php?action=register">Inscription</a>
-            <a class="blog-nav-item" href="/blog/index?action=login">Connexion</a>';
+            <a class="blog-nav-item" href="/blog/index.php?action=login">Connexion</a>';
           }
           ?>
         </nav>

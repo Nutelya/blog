@@ -105,6 +105,17 @@ class UserManagerPDO
 		return $user->password();
 	}
 
+	public final function emailCorrect (User $user) {
+		if ( preg_match ( " /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/ " , $user->email()))
+			{
+				$resultat = false;
+			}
+			else
+			{
+				$resultat = true;
+			}
+			return $resultat;
+	}
 //	public final function emailMdp(User $user)
 //	{
 //		if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $user->email()))
